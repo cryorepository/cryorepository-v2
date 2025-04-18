@@ -56,7 +56,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavMenu() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="sm:block hidden">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger className="cursor-pointer">Navigation</NavigationMenuTrigger>
@@ -105,13 +105,6 @@ export function NavMenu() {
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
