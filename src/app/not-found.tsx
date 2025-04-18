@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import GridContainer from "@/components/homeComponents/grid-container"
 
 export const metadata: Metadata = {
   title: 'CryoRepository - Discover Cryopreservation | Cryo Repo',
@@ -32,11 +31,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function NotFound() {
   return (
     <>
       <div className="top"></div>
-      <GridContainer />
+      <div className="flex items-center justify-center gap-3 w-screen h-[calc(100vh-128px)]">
+        <h1 className="font-semibold text-4xl">404</h1>
+        <div className="border-l w-[1px] h-[38px] border-black dark:border-white" />
+        <h2 className="font-semibold text-2xl">Page Not Found</h2>
+      </div>
+      <style>{`
+        footer{
+          display: none;
+        }
+      `}</style>
     </>
   );
 }
