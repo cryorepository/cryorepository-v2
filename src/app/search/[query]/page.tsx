@@ -1,5 +1,6 @@
 // app/search/[query]/page.tsx
 import { Metadata } from "next"
+import { notFound } from 'next/navigation'
 import Link from "next/link"
 import { SearchBreadcrumb } from "@/components/searchComponents/searchPage/search-breadcrumb"
 
@@ -13,7 +14,7 @@ interface SearchResult {
 
 interface SearchResponse {
   response: {
-    search_results: SearchResult[][]
+    search_results: SearchResult[]
     dym?: string
     dym_href?: string
   }
@@ -24,8 +25,8 @@ interface SearchPageParams {
 }
 
 // Utility function to extract search term
-const getSearchTermFromParams = (params: SearchPageParams): string => {
-  const decodedToken = decodeURIComponent(params.query)
+const decodeParams = (query: string): string => {
+  const decodedToken = decodeURIComponent(query)
   return decodedToken.replace(/^query=/, "")
 }
 
@@ -35,7 +36,10 @@ export const generateMetadata = async ({
 }: {
   params: SearchPageParams
 }): Promise<Metadata> => {
-  const decodedToken = getSearchTermFromParams(params)
+  const { query } = await params;
+  const fullParam = await params;
+  const decodedToken = decodeParams(query);
+
   return {
     title: `${decodedToken} | Search Results CryoRepository`,
     description: `${decodedToken} | Search Results CryoRepository`,
@@ -52,7 +56,7 @@ export const generateMetadata = async ({
           alt: "CryoRepository preview image",
         },
       ],
-      url: `https://cryorepository.com/search/${params.query}`,
+      url: `https://cryorepository.com/search/${fullParam}`,
       type: "website",
     },
     twitter: {
@@ -67,10 +71,12 @@ export const generateMetadata = async ({
 }
 
 export default async function SearchPage({ params }: { params: SearchPageParams }) {
-  const searchTerm = getSearchTermFromParams(params)
+  const { query } = await params;
+  const searchTerm = decodeParams(query);
 
   // Fetch search results
-  const response = await fetch("https://api.cryorepository.com/search", {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+  const response = await fetch(`${BASE_URL}/api/search`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -80,19 +86,14 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
     next: { revalidate: 3600 }, // Revalidate every hour
   })
 
+
   if (!response.ok) {
-    return (
-      <div className="min-h-[calc(100vh-60px)] flex items-center justify-center w-full">
-        <div className="w-[300px] mx-4 sm:mx-15 p-7 border border-gray-700 rounded">
-          <h1 className="text-4xl font-bold text-white">404</h1>
-          <p className="text-lg text-gray-400">Page Not Found</p>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   const data: SearchResponse = await response.json()
-  const searchResults = data.response.search_results[0] || []
+  const searchResults = data.response.search_results || []
+
   const { dym, dym_href } = data.response
   const href_value = `query=${dym_href || ""}`
 
@@ -123,7 +124,7 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
               <Link
                 key={index}
                 href={`/database/${result.hash}`}
-                className="group flex flex-col sm:flex-row gap-4 py-4" //border border-input rounded-lg hover:bg-gray-800 transition-colors"
+                className="group flex flex-col sm:flex-row gap-4 py-4"
               >
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold group-hover:underline">{result.name}</h2>

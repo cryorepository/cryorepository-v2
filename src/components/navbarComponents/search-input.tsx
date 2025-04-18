@@ -52,6 +52,8 @@ export function SearchInput() {
         const replacedQuery = decodedQuery.replace(/^query=/, "")
         setValue(replacedQuery);
       }
+    } else {
+      setValue("");
     }
   }, [pathname]);
 

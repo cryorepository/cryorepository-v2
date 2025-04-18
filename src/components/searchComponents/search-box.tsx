@@ -366,8 +366,8 @@ export function SearchBox() {
 
     const encodedSearchTerm = encodeURIComponent(searchTerm)
     window.location.href = textSearch
-      ? `/search/${encodedSearchTerm}`
-      : `/search/vector/${encodedSearchTerm}`
+      ? `/search/query=${encodedSearchTerm}`
+      : `/search/vector/query=${encodedSearchTerm}`
   }
 
   const toggleSearch = () => {
