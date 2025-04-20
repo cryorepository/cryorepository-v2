@@ -290,16 +290,22 @@ export function SearchBox() {
 import React, { useState, useEffect, KeyboardEvent, useRef } from "react"
 import { AlignLeft, Brain, CornerDownRight, Search } from "lucide-react"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
 
+interface SearchResultItem {
+  name: string;
+  hash: string;
+}
+
 export function SearchBox() {
   const [textSearch, setTextSearch] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [errorText, setErrorText] = useState<string>("")
-  const [results, setResults] = useState<string[]>([])
+  const [results, setResults] = useState<SearchResultItem[]>([])
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
   const [isTyping, setIsTyping] = useState<boolean>(false)
   const [isFetching, setIsFetching] = useState<boolean>(false)
@@ -308,7 +314,7 @@ export function SearchBox() {
   // Debounce logic
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>("")
   useEffect(() => {
-    if (searchTerm.length >= 4) {
+    if (searchTerm.length > 3) {
       setIsTyping(true)
     }
     const handler = setTimeout(() => {
@@ -323,14 +329,19 @@ export function SearchBox() {
 
   // Fetch API when debouncedSearchTerm changes
   useEffect(() => {
-    if (debouncedSearchTerm.length >= 4) {
+    if (debouncedSearchTerm.length > 3) {
       const fetchResults = async () => {
         setIsFetching(true)
         try {
-          const response = await fetch(`/api/search?query=${encodeURIComponent(debouncedSearchTerm)}`)
+          const response = await fetch("/api/quickSearch", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ search_query: debouncedSearchTerm }),
+          });
           if (!response.ok) throw new Error("Failed to fetch")
           const data = await response.json()
           setResults(data.results || [])
+          console.log(data.results);
           setIsDropdownOpen(true)
         } catch (error) {
           console.error("Search API error:", error)
@@ -427,12 +438,14 @@ export function SearchBox() {
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
           value={searchTerm}
+          autoComplete="off"
         />
         {isDropdownOpen && (
           <div
             className={cn(
               "absolute min-w-[420px] bg-background border border-input rounded-md shadow-lg p-1 z-50",
               "max-h-60 overflow-y-auto",
+              "flex flex-col",
               "animate-in fade-in-0 zoom-in-95",
               "top-full left-0 mt-1"
             )}
@@ -448,27 +461,21 @@ export function SearchBox() {
             ) : results.length > 0 ? (
               // Show results when available
               results.map((result, index) => (
-                <div
+                <Link
+                  href={`/database/${result.hash}`}
                   key={index}
                   className={cn(
-                    "px-2 py-1.5 text-sm text-foreground rounded-sm",
+                    "px-2 py-1.5 text-sm text-foreground rounded-sm w-full",
                     "hover:bg-accent hover:text-accent-foreground cursor-pointer",
                     "focus:bg-accent focus:text-accent-foreground"
                   )}
-                  onClick={() => handleResultSelect(result)}
                   role="option"
                   tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault()
-                      handleResultSelect(result)
-                    }
-                  }}
                 >
-                  {result}
-                </div>
+                  {result.name}
+                </Link>
               ))
-            ) : null}
+            ) : <p className="font-semibold text-sm text-center py-2 text-muted-foreground">No Results Found</p>}
           </div>
         )}
 

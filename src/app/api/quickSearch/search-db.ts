@@ -1,8 +1,7 @@
 // lib/search_db.ts
-import MainDB from './schema';
+import MainDB from '@/lib/schemas/schema';
 import { Document } from 'mongoose';
 
-// Infer the document type from MainDB
 type MainDBDocument = Document & {
   name?: string;
   overview?: string;
@@ -20,12 +19,12 @@ type MainDBDocument = Document & {
   references?: Array<{ reference?: string; url?: string }>;
 };
 
-async function searchDB(search_term: string, closest_match: string): Promise<MainDBDocument[]> {
+async function searchDB(search_term: string): Promise<MainDBDocument[]> {
   try {
     const regex = new RegExp(search_term, 'i');
     const projection = { name: 1, overview: 1, hash: 1, structure_image: 1, _id: 0 };
 
-    const regexFields = [
+    const searchFields = [
       { name: regex },
       { overview: regex },
       { tags: regex },
@@ -33,8 +32,6 @@ async function searchDB(search_term: string, closest_match: string): Promise<Mai
       { written_by: regex },
       { 'references.reference': { $regex: regex } },
       { 'references.url': { $regex: regex } },
-    ];
-    const exactFields = [
       { cas_number: search_term },
       { hash: search_term },
       { class: search_term },
@@ -44,15 +41,15 @@ async function searchDB(search_term: string, closest_match: string): Promise<Mai
       { optimal_conc: search_term },
     ];
 
-    let results = await MainDB.aggregate<MainDBDocument>([
+    const results = await MainDB.aggregate<MainDBDocument>([
       {
         $match: {
-          $or: [...regexFields, ...exactFields],
+          $or: searchFields,
         },
       },
       {
         $group: {
-          _id: '$hash',
+          _id: '$hash', // Deduplicate by hash
           doc: { $first: '$$ROOT' },
         },
       },
@@ -65,34 +62,7 @@ async function searchDB(search_term: string, closest_match: string): Promise<Mai
       {
         $limit: 30,
       },
-    ]);
-
-    if (results.length === 0 && closest_match) {
-      const closestMatchRegex = new RegExp(closest_match, 'i');
-
-      results = await MainDB.aggregate<MainDBDocument>([
-        {
-          $match: {
-            $or: regexFields.map(field => ({ [Object.keys(field)[0]]: closestMatchRegex })),
-          },
-        },
-        {
-          $group: {
-            _id: '$hash',
-            doc: { $first: '$$ROOT' },
-          },
-        },
-        {
-          $replaceRoot: { newRoot: '$doc' },
-        },
-        {
-          $project: projection,
-        },
-        {
-          $limit: 30,
-        },
-      ]);
-    }
+    ]).exec();
 
     return results;
   } catch (err) {

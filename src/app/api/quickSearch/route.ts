@@ -1,27 +1,24 @@
 // app/api/search/route.tsx
 import { NextRequest, NextResponse } from 'next/server';
-import autoComplete from './autocomplete';
 import searchDB from './search-db';
-import { Document } from 'mongoose';
 
 interface SearchRequestBody {
   search_query?: string;
 }
 
-type MainDBDocument = Document & {
-  name?: string;
-  overview?: string;
+/*interface SearchResponse {
+  message: string;
+  results: string[];
+}*/
+
+interface SearchResultItem {
+  name: string;
   hash: string;
-  structure_image?: string;
-};
+}
 
 interface SearchResponse {
   message: string;
-  response: {
-    dym: string;
-    dym_href: string;
-    search_results: MainDBDocument[];
-  };
+  results: SearchResultItem[];
 }
 
 interface ErrorResponse {
@@ -30,11 +27,8 @@ interface ErrorResponse {
 
 export async function POST(req: NextRequest) {
   try {
-
     const body: SearchRequestBody = await req.json();
     const { search_query } = body;
-
-    console.log('Request method:', req.method); // For debugging
 
     if (!search_query) {
       return NextResponse.json({ error: 'Query is undefined' }, { status: 400 });
@@ -47,28 +41,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid query encoding.' }, { status: 400 });
     }
 
-    const sanitizedQuery = decodedQuery.replace(/[^\w\s]/gi, '');
+    const sanitizedQuery = decodedQuery.replace(/[^\w\s]/gi, '').trim();
 
     if (sanitizedQuery.length <= 2) {
       return NextResponse.json(
-        { error: 'Query is too short. Please enter more than 3 characters.' },
-        { status: 409 }
+        { error: 'Query is too short. Please enter more than 2 characters.' },
+        { status: 400 }
       );
     }
 
-    const autoCompleteResult = await autoComplete(sanitizedQuery);
-    const { closest_match, autocomplete } = autoCompleteResult;
+    const searchResults = await searchDB(sanitizedQuery);
 
-    const autoCompletedWordEncoded = encodeURIComponent(autocomplete);
-    const searchResults = await searchDB(decodedQuery, closest_match);
+    /*const response: SearchResponse = {
+      message: 'Success',
+      results: searchResults
+        .filter(result => result.name) // Ensure name exists
+        .map(result => result.name!), // Extract name field
+    };*/
 
     const response: SearchResponse = {
       message: 'Success',
-      response: {
-        dym: autocomplete,
-        dym_href: autoCompletedWordEncoded,
-        search_results: searchResults,
-      },
+      results: searchResults
+        .filter(result => result.name && result.hash) // Make sure both exist, if needed
+        .map(result => ({
+        name: result.name!,
+        hash: result.hash!,
+        })),
     };
 
     return NextResponse.json(response, { status: 200 });

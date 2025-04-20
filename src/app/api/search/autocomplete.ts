@@ -1,6 +1,6 @@
 // lib/autocomplete.ts
 import { JaroWinklerDistance } from 'natural';
-import MainDB from './schema';
+import MainDB from '@/lib/schemas/schema';
 import { Document } from 'mongoose';
 
 interface AutoCompleteResult {
