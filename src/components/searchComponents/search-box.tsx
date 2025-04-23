@@ -282,14 +282,10 @@ export function SearchBox() {
   )
 }*/
 
-
-
-// components/SearchBox.tsx
 "use client"
 
 import React, { useState, useEffect, KeyboardEvent, useRef } from "react"
 import { AlignLeft, Brain, CornerDownRight, Search } from "lucide-react"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -309,7 +305,9 @@ export function SearchBox() {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false)
   const [isTyping, setIsTyping] = useState<boolean>(false)
   const [isFetching, setIsFetching] = useState<boolean>(false)
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1) // Track focused result
   const inputRef = useRef<HTMLInputElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Debounce logic
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>("")
@@ -320,7 +318,7 @@ export function SearchBox() {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm)
       setIsTyping(false)
-    }, 500) // 500ms cooldown
+    }, 500)
 
     return () => {
       clearTimeout(handler)
@@ -337,11 +335,11 @@ export function SearchBox() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ search_query: debouncedSearchTerm }),
-          });
+          })
           if (!response.ok) throw new Error("Failed to fetch")
           const data = await response.json()
           setResults(data.results || [])
-          console.log(data.results);
+          console.log(data.results)
           setIsDropdownOpen(true)
         } catch (error) {
           console.error("Search API error:", error)
@@ -362,6 +360,7 @@ export function SearchBox() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
     setErrorText("")
+    setFocusedIndex(-1) // Reset focus when typing
   }
 
   const handleSearchClick = () => {
@@ -386,28 +385,36 @@ export function SearchBox() {
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && focusedIndex === -1) {
       event.preventDefault()
       handleSearchClick()
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault()
+      setFocusedIndex((prev) => (prev < results.length - 1 ? prev + 1 : prev))
+    } else if (event.key === "ArrowUp") {
+      event.preventDefault()
+      setFocusedIndex((prev) => (prev > 0 ? prev - 1 : -1))
+    } else if (event.key === "Enter" && focusedIndex >= 0) {
+      event.preventDefault()
+      window.location.href = `/database/${results[focusedIndex].hash}`
+      setIsDropdownOpen(false)
+    } else if (event.key === "Escape") {
+      setIsDropdownOpen(false)
+      setFocusedIndex(-1)
     }
-  }
-
-  const handleResultSelect = (result: string) => {
-    setSearchTerm(result)
-    setIsDropdownOpen(false)
-    setErrorText("")
-    inputRef.current?.focus()
-    const encodedResult = encodeURIComponent(result)
-    window.location.href = textSearch
-      ? `/search/query/${encodedResult}`
-      : `/search/vector/query/${encodedResult}`
   }
 
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      if (
+        inputRef.current &&
+        dropdownRef.current &&
+        !inputRef.current.contains(event.target as Node) &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false)
+        setFocusedIndex(-1)
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
@@ -442,6 +449,7 @@ export function SearchBox() {
         />
         {isDropdownOpen && (
           <div
+            ref={dropdownRef}
             className={cn(
               "absolute min-w-[420px] bg-background border border-input rounded-md shadow-lg p-1 z-50",
               "max-h-60 overflow-y-auto",
@@ -451,7 +459,6 @@ export function SearchBox() {
             )}
           >
             {(isTyping || isFetching) ? (
-              // Show skeletons during typing or fetching
               Array.from({ length: 5 }).map((_, index) => (
                 <Skeleton
                   key={index}
@@ -459,7 +466,6 @@ export function SearchBox() {
                 />
               ))
             ) : results.length > 0 ? (
-              // Show results when available
               results.map((result, index) => (
                 <Link
                   href={`/database/${result.hash}`}
@@ -467,15 +473,23 @@ export function SearchBox() {
                   className={cn(
                     "px-2 py-1.5 text-sm text-foreground rounded-sm w-full",
                     "hover:bg-accent hover:text-accent-foreground cursor-pointer",
-                    "focus:bg-accent focus:text-accent-foreground"
+                    focusedIndex === index && "bg-accent text-accent-foreground"
                   )}
                   role="option"
                   tabIndex={0}
+                  onClick={() => {
+                    setIsDropdownOpen(false)
+                    setFocusedIndex(-1)
+                  }}
                 >
                   {result.name}
                 </Link>
               ))
-            ) : <p className="font-semibold text-sm text-center py-2 text-muted-foreground">No Results Found</p>}
+            ) : (
+              <p className="font-semibold text-sm text-center py-2 text-muted-foreground">
+                No Results Found
+              </p>
+            )}
           </div>
         )}
 

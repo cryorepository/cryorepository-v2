@@ -1,5 +1,8 @@
 {/*// pages/database/[hash].tsx
-import ArticleDetails from './displayData';
+import { notFound } from "next/navigation";
+//import Image from "next/image";
+import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb"
+import { CheckCheck, Upload } from 'lucide-react'
 
 interface ArticleEntry {
   name: string;
@@ -32,15 +35,19 @@ interface ArticlePageParams {
 }
 
 async function getArticleData(hash: string): Promise<ArticleData | null> {
-  const res = await fetch(`https://api.cryorepository.com/fetch_article`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ hash }),
-    next: { revalidate: 3600 },
-  });
+  try {
+    const res = await fetch(`https://api.cryorepository.com/fetch_article`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ hash }),
+      next: { revalidate: 3600 },
+    });
 
-  if (!res.ok) return null;
-  return res.json();
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
 }
 
 export async function generateMetadata({ params }: ArticlePageParams) {
@@ -48,30 +55,8 @@ export async function generateMetadata({ params }: ArticlePageParams) {
 
   if (!data) {
     return {
-      title: 'Page Not Found (404) - CryoRepository',
-      description: 'Page Not Found (404) - CryoRepository | Your source of information on cryoprotective agents.',
-      openGraph: {
-        title: 'Page Not Found (404) - CryoRepository',
-        description: 'Page Not Found (404) - CryoRepository | Your source of information on cryoprotective agents.',
-        images: [
-          {
-            url: 'https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938',
-            width: 500,
-            height: 500,
-            alt: 'CryoRepository preview image',
-          },
-        ],
-        url: 'https://cryorepository.com',
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: 'Page Not Found (404) - CryoRepository',
-        description: 'Page Not Found (404) - CryoRepository | Your source of information on cryoprotective agents.',
-        images: [
-          'https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938',
-        ],
-      },
+      title: "Article Not Found | CryoRepository",
+      description: "The requested article could not be found.",
     };
   }
 
@@ -79,29 +64,32 @@ export async function generateMetadata({ params }: ArticlePageParams) {
 
   return {
     title: `${entry.name} | CryoRepository`,
-    description: entry.overview || '',
+    description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
     alternates: {
       canonical: `https://www.cryorepository.com/database/${entry.hash}`,
     },
     openGraph: {
-      siteName: 'CryoRepository',
+      siteName: "CryoRepository",
       title: `${entry.name} | CryoRepository`,
-      description: entry.overview || '',
+      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
       images: [
         {
-          url: entry.structure_image || 'https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938',
-          alt: 'CryoRepository preview image',
+          url:
+            entry.structure_image ||
+            "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
+          alt: `${entry.name} structure`,
         },
       ],
-      url: `https://cryorepository.com/database/${entry.hash}`,
-      type: 'website',
+      url: `https://www.cryorepository.com/database/${entry.hash}`,
+      type: "website",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: entry.name,
-      description: entry.overview || '',
+      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
       images: [
-        entry.structure_image || 'https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938',
+        entry.structure_image ||
+          "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
       ],
     },
   };
@@ -110,44 +98,705 @@ export async function generateMetadata({ params }: ArticlePageParams) {
 export default async function ArticlePage({ params }: ArticlePageParams) {
   const data = await getArticleData(params.hash);
 
-  if (!data) {
-    return (
-      <div className="flex items-center justify-center min-h-[calc(100vh-60px)] w-full">
-        <div className="w-[300px] mx-15 p-7 border border-gray-700 rounded">
-          <h1 className="text-4xl font-bold">404</h1>
-          <p className="mt-2">Page Not Found</p>
+  if (!data) return notFound();
+
+  const { entry } = data;
+
+  return (
+    <div className="pt-4">
+      <SearchBreadcrumb agentName={entry.name} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] max-w-[1800px] mx-auto">
+        <div className="flex flex-col mb-8">
+          <div>
+            <h1 className="flex items-center gap-1 flex-wrap text-3xl font-bold text-[var(--text-color)]">
+              {entry.name}
+              {entry.chemical_formula_html && (
+                <span className="flex items-center gap-1 max-[450px]:hidden">
+                  - <span dangerouslySetInnerHTML={{ __html: entry.chemical_formula_html }} />
+                </span>
+              )}
+            </h1>
+
+            <div className="flex justify-between items-center pt-1 max-[450px]:flex-col max-[450px]:items-start max-[450px]:gap-1">
+              <div className="flex items-center gap-1 text-muted-foreground">
+                <Upload height={14} width={14} />
+                <h5 className=" text-sm font-semibold">
+                  Written by
+                  <span className="pl-[2px]">
+                    {entry.written_by && entry.written_by.length > 0 
+                      ? entry.written_by.join(', ') 
+                      : "Cryorepository Foundation"}
+                  </span>
+                </h5>
+                <h6 className="flex items-center gap-1 px-1 py-[1px] text-purple-500 border border-[#6638b0] rounded-2xl bg-gradient-to-r from-[#6638b0] to-[#9848a3] text-transparent bg-clip-text text-xs">
+                  <CheckCheck stroke="#6638b0" height={16} width={16} />
+                  <span className="max-[450px]:hidden">Verified</span>
+                </h6>
+              </div>
+              <div className="flex items-center gap-2.5">
+                
+                <a
+                  href="/report"
+                  title="Report Error"
+                  className="p-1 rounded text-[var(--icon-color)] text-xl hover:bg-[var(--hover-color)] transition"
+                >
+                  CI
+                </a>
+                <a
+                  href="/report"
+                  title="Report Error"
+                  className="p-1 rounded text-[var(--icon-color)] text-xl hover:bg-[var(--hover-color)] transition"
+                >
+                  CO
+                </a>
+                <a
+                  href="/report"
+                  title="Report Error"
+                  className="p-1 rounded text-[var(--icon-color)] text-xl hover:bg-[var(--hover-color)] transition"
+                >
+                  
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:hidden mt-5 border border-color rounded">
+              <table className="w-full">
+                <tbody>
+                  <tr>
+                    <td className="text-[var(--icon-color)] font-semibold p-2">Class</td>
+                    <td className="text-right p-2">{entry.chemClass}</td>
+                  </tr>
+                  <tr>
+                    <td className="text-[var(--icon-color)] font-semibold p-2">Chemical Formula</td>
+                    <td
+                      className="text-right p-2"
+                      dangerouslySetInnerHTML={{ __html: entry.chemical_formula_html }}
+                    />
+                  </tr>
+                  <tr>
+                    <td className="text-[var(--icon-color)] font-semibold p-2">Molecular Weight</td>
+                    <td className="text-right p-2">{entry.molecular_weight}</td>
+                  </tr>
+                  {entry.optimal_conc && (
+                    <tr>
+                      <td className="text-[var(--icon-color)] font-semibold p-2">Optimal Conc</td>
+                      <td className="text-right p-2">{entry.optimal_conc}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {entry.synonyms.length > 0 && entry.synonyms.some(syn => syn.trim() !== '') && (
+              <div className="lg:hidden my-3 p-4 border border-color rounded-lg max-w-[930px]">
+                <p className="font-semibold">Synonyms</p>
+                <h6 className="text-sm text-muted-foreground">Also Known As</h6>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {entry.synonyms.map((synonym, index) => (
+                    <p
+                      key={index}
+                      className="px-2 py-1 border border-color text-muted-foreground rounded-2xl"
+                    >
+                      {synonym}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {entry.gras_info?.found !== undefined && (
+              <div className="lg:hidden flex items-center justify-between my-3 p-4 border border-color rounded-lg max-w-[930px]">
+                <div>
+                  <h6 className="text-sm">{entry.name}</h6>
+                  <h3 className="text-base">
+                    {entry.gras_info.found ? 'Is on FDAs GRAS list' : 'Is not on FDAs GRAS list'}
+                  </h3>
+                </div>
+                {entry.gras_info.reference_url && (
+                  <a
+                    href={entry.gras_info.reference_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl text-[var(--icon-color)]"
+                  >
+                    
+                  </a>
+                )}
+              </div>
+            )}
+
+            {entry.cell_info.length > 0 &&
+              entry.cell_info.some(cell => cell.cellType && cell.cellType.trim() !== '') && (
+                <div className="lg:hidden my-3 p-4 border border-color rounded-lg max-w-[930px]">
+                  <p className="font-semibold">Tested On</p>
+                  <h6 className="text-sm text-[var(--icon-color)]">Cell Type - Success Rate</h6>
+                  <div className="flex flex-col gap-1 mt-2.5">
+                    {entry.cell_info.map((cell, index) => (
+                      <p key={index} className="flex justify-between items-center">
+                        <span>{cell.cellType}</span>
+                        {cell.referenceURL && cell.referenceURL.trim() !== '' ? (
+                          <a
+                            href={cell.referenceURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-0.5 text-[var(--icon-color)] hover:border-b border-[var(--icon-color)]"
+                          >
+                            <span>{cell.successRate && `(${cell.successRate}%)`}</span>
+                            <span className="text-sm"></span>
+                          </a>
+                        ) : (
+                          <span className="flex items-center gap-0.5 text-[var(--icon-color)]">
+                            {cell.successRate && `(${cell.successRate}%)`}
+                          </span>
+                        )}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+            <div
+              className="prose max-w-none mt-4 [&_ul]:ml-5 [&_ol]:ml-5 [&_ul]:mt-1 [&_ol]:mt-1"
+              dangerouslySetInnerHTML={{ __html: entry.html_text }}
+            />
+
+            {entry.references.length > 0 &&
+              entry.references.some(ref => ref.reference && ref.reference.trim() !== '') && (
+                <div className="my-3">
+                  <h3 className="text-lg font-semibold">References</h3>
+                  <div className="flex flex-col gap-3 mb-4">
+                    {entry.references
+                      .filter(ref => ref.reference && ref.reference.trim() !== '')
+                      .map((reference, index) => (
+                        <div key={index} className="flex flex-col">
+                          <span className="text-sm text-[var(--text-color)]">
+                            <a
+                              href={reference.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[var(--icon-color)] hover:underline"
+                            >
+                              {reference.organisation}
+                            </a>{' '}
+                            - {reference.reference}
+                          </span>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+              )}
+
+            <div className="lg:hidden">
+              {entry.structure_image && (
+                <div className="my-3 p-4 border border-color rounded-lg max-w-[320px]">
+                  <img
+                    className="w-full rounded-lg data-[theme=dark]:bg-white"
+                    alt="structural diagram"
+                    src={entry.structure_image}
+                  />
+                </div>
+              )}
+              {entry.safety_document_sheet && (
+                <div className="flex items-center justify-between my-3 p-4 border border-color rounded-lg max-w-[320px]">
+                  <div>
+                    <h6 className="text-sm">Safety Document Sheet</h6>
+                    <h3 className="text-base">{entry.name} SDS</h3>
+                  </div>
+                  <a
+                    href={entry.safety_document_sheet}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl text-[var(--icon-color)]"
+                  >
+                    
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-        <style jsx>{`
-          footer {
-            display: none;
-          }
-        `}</style>
+
+        <div className="hidden lg:block px-5">
+          <div className="p-4 border border-color rounded-lg max-w-[320px]">
+            <h4 className="pb-2 text-lg font-semibold">Information</h4>
+            <h6 className="text-xs font-semibold">CAS number: {entry.cas_number}</h6>
+            <div className="w-full">
+              <table className="w-full">
+                <tbody>
+                  <tr>
+                    <td className="text-muted-foreground font-semibold py-0.5">Class</td>
+                    <td className="text-right py-0.5">{entry.chemClass}</td>
+                  </tr>
+                  <tr>
+                    <td className="text-[var(--icon-color)] font-semibold py-0.5">Chemical Formula</td>
+                    <td
+                      className="text-right py-0.5"
+                      dangerouslySetInnerHTML={{ __html: entry.chemical_formula_html }}
+                    />
+                  </tr>
+                  <tr>
+                    <td className="text-[var(--icon-color)] font-semibold py-0.5">Molecular Weight</td>
+                    <td className="text-right py-0.5">{entry.molecular_weight}</td>
+                  </tr>
+                  {entry.optimal_conc && (
+                    <tr>
+                      <td className="text-[var(--icon-color)] font-semibold py-0.5">Optimal Conc</td>
+                      <td className="text-right py-0.5">{entry.optimal_conc}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {entry.synonyms.length > 0 && entry.synonyms.some(syn => syn.trim() !== '') && (
+            <div className="my-3 p-4 border border-color rounded-lg max-w-[320px]">
+              <h3 className="text-lg font-semibold">Synonyms</h3>
+              <h6 className="text-sm text-[var(--icon-color)]">Also Known As</h6>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {entry.synonyms.map((synonym, index) => (
+                  <p
+                    key={index}
+                    className="px-2 py-1 border border-[var(--hover-color)] text-[var(--icon-color)] rounded-2xl"
+                  >
+                    {synonym}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {entry.gras_info?.found !== undefined && (
+            <div className="flex items-center justify-between my-3 p-4 border border-color rounded-lg max-w-[320px]">
+              <div>
+                <h6 className="text-sm">{entry.name}</h6>
+                <h3 className="text-base">
+                  {entry.gras_info.found ? 'Is on FDAs GRAS list' : 'Is not on FDAs GRAS list'}
+                </h3>
+              </div>
+              {entry.gras_info.reference_url && (
+                <a
+                  href={entry.gras_info.reference_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xl text-[var(--icon-color)]"
+                >
+                  
+                </a>
+              )}
+            </div>
+          )}
+
+          {entry.cell_info.length > 0 &&
+            entry.cell_info.some(cell => cell.cellType && cell.cellType.trim() !== '') && (
+              <div className="my-3 p-4 border border-color rounded-lg max-w-[320px]">
+                <p className="font-semibold">Tested On</p>
+                <h6 className="text-sm text-[var(--icon-color)]">Cell Type - Success Rate</h6>
+                <div className="flex flex-col gap-1 mt-2.5">
+                  {entry.cell_info.map((cell, index) => (
+                    <p key={index} className="flex justify-between items-center">
+                      <span>{cell.cellType}</span>
+                      {cell.referenceURL && cell.referenceURL.trim() !== '' ? (
+                        <a
+                          href={cell.referenceURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-0.5 text-[var(--icon-color)] hover:border-b border-[var(--icon-color)]"
+                        >
+                          <span>{cell.successRate && `(${cell.successRate}%)`}</span>
+                          <span className="text-sm"></span>
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-0.5 text-[var(--icon-color)]">
+                          {cell.successRate && `(${cell.successRate}%)`}
+                        </span>
+                      )}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          {entry.structure_image && (
+            <div className="my-3 p-4 border border-color rounded-lg max-w-[320px] bg-transparent">
+              <img
+                className="w-full rounded-lg data-[theme=dark]:bg-white"
+                alt="structural diagram"
+                src={entry.structure_image}
+              />
+            </div>
+          )}
+
+          {entry.safety_document_sheet && (
+            <div className="flex items-center justify-between my-3 p-4 border border-color rounded-lg max-w-[320px]">
+              <div>
+                <h6 className="text-sm">Safety Document Sheet</h6>
+                <h3 className="text-base">{entry.name} SDS</h3>
+              </div>
+              <a
+                href={entry.safety_document_sheet}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl text-[var(--icon-color)]"
+              >
+                
+              </a>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between my-3 p-4 border border-color rounded-lg max-w-[320px]">
+            <div>
+              <h5 className="text-sm">Powered By</h5>
+              <h1 className="text-xl">CryoDao</h1>
+            </div>
+            <img
+              className="h-11 w-11 data-[theme=light]:invert-0 data-[theme=dark]:invert"
+              alt="CryoDao Logo"
+              src="https://cdn.prod.website-files.com/643d6a447c6e1b4184d3ddfd/643d7ebba7e71c58cdb21f5a_CryoDAO-icon-black.svg"
+            />
+          </div>
+        </div>
       </div>
-    );
+    </div>
+  );
+}*/}
+
+
+
+import { notFound } from "next/navigation";
+import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb";
+import { CheckCheck, Upload, MoveUpRight, ExternalLink } from 'lucide-react';
+import CitePopup from "@/components/articleComponents/cite-button"
+import CopyButton from "@/components/articleComponents/copy-button"
+import ReportError from "@/components/articleComponents/report-button"
+
+interface ArticleEntry {
+  name: string;
+  hash: string;
+  class: string;
+  chemical_formula_html: string;
+  molecular_formula_html: string;
+  molecular_weight: string;
+  optimal_conc: string;
+  structure_image?: string;
+  cas_number: string;
+  safety_document_sheet?: string;
+  html_text: string;
+  pricing_info?: any;
+  date_written: string;
+  written_by: string[];
+  synonyms: string[];
+  cell_info: Array<{ cellType: string; successRate?: string; referenceURL?: string }>;
+  references: Array<{ reference: string; url: string; organisation: string }>;
+  gras_info?: { found: boolean; reference_url?: string };
+  overview?: string;
+}
+
+interface ArticleData {
+  entry: ArticleEntry;
+}
+
+interface ArticlePageParams {
+  params: { hash: string };
+}
+
+async function getArticleData(hash: string): Promise<ArticleData | null> {
+  try {
+    // const res = await fetch(`https://api.cryorepository.com/fetch_article`, {
+    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const res = await fetch(`${BASE_URL}/api/article/${hash}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function generateMetadata({ params }: ArticlePageParams) {
+  const pageParams = await params;
+  const data = await getArticleData(pageParams.hash);
+
+  if (!data) {
+    return {
+      title: "Article Not Found | CryoRepository",
+      description: "The requested article could not be found.",
+    };
   }
 
   const { entry } = data;
 
-  const props: ArticleEntry = {
-    name: entry.name,
-    hash: entry.hash,
-    chemClass: entry.class,
-    chemicalFormulaHtml: entry.chemical_formula_html,
-    molecularFormulaHtml: entry.molecular_formula_html,
-    molecularWeight: entry.molecular_weight,
-    optimalConc: entry.optimal_conc,
-    structureImage: entry.structure_image,
-    casNumber: entry.cas_number,
-    safetyDocumentSheet: entry.safety_document_sheet,
-    htmlText: entry.html_text,
-    pricingInfo: entry.pricing_info,
-    date_written: entry.date_written,
-    written_by: entry.written_by,
-    synonyms: entry.synonyms,
-    cell_info: entry.cell_info,
-    references: entry.references,
-    gras_info: entry.gras_info,
+  return {
+    title: `${entry.name} | CryoRepository`,
+    description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
+    alternates: {
+      canonical: `https://www.cryorepository.com/database/${entry.hash}`,
+    },
+    openGraph: {
+      siteName: "CryoRepository",
+      title: `${entry.name} | CryoRepository`,
+      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
+      images: [
+        {
+          url:
+            entry.structure_image ||
+            "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
+          alt: `${entry.name} structure`,
+        },
+      ],
+      url: `https://www.cryorepository.com/database/${entry.hash}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: entry.name,
+      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
+      images: [
+        entry.structure_image ||
+          "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
+      ],
+    },
   };
+}
 
-  return <ArticleDetails {...props} />;
-}*/}
+export default async function ArticlePage({ params }: ArticlePageParams) {
+  const pageParams = await params;
+  const data = await getArticleData(pageParams.hash);
+
+  if (!data) return notFound();
+
+  const { entry } = data;
+
+  return (
+    <div className="pt-4">
+      {/* Breadcrumb */}
+      <SearchBreadcrumb agentName={entry.name} />
+
+      {/* Content Box */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] max-w-[1800px] pt-2 mx-auto">
+        {/* Main Content */}
+        <div className="flex flex-col mb-8">
+          <h1 className="flex items-center gap-1 flex-wrap text-3xl font-bold">
+            {entry.name}
+            {entry.chemical_formula_html && (
+              <span className="flex items-center gap-1 max-md:hidden">
+                - <span dangerouslySetInnerHTML={{ __html: entry.chemical_formula_html }} />
+              </span>
+            )}
+          </h1>
+
+          {/* Author and Actions */}
+          <div className="flex justify-between items-center pt-1 max-md:flex-col max-md:items-start max-md:gap-1">
+            <div className="flex items-center gap-1 text-muted-foreground">
+              <Upload height={14} width={14} />
+              <h5 className="text-sm font-semibold">
+                Written by
+                <span className="pl-[2px]">
+                  {entry.written_by && entry.written_by.length > 0
+                    ? entry.written_by.join(', ')
+                    : "Cryorepository Foundation"}
+                </span>
+              </h5>
+              <h6 className="flex items-center gap-1 px-1 py-[1px] text-purple-500 border border-[#6638b0] rounded-2xl bg-gradient-to-r from-[#6638b0] to-[#9848a3] text-transparent bg-clip-text text-xs">
+                <CheckCheck stroke="#6638b0" height={16} width={16} />
+                <span className="max-md:hidden">Verified</span>
+              </h6>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <CitePopup citationsData={{name: "Sample Research Paper", date_written: "2023-10-15", written_by: "Doe, J.", hash: "abc123"}} />
+              <CopyButton token={entry.hash} />
+              <ReportError hash={entry.hash} name={entry.name} />
+            </div>
+          </div>
+
+          {/* Main Content */}
+          <div
+            className="prose max-w-none mt-4 [&_ul]:ml-5 [&_ol]:ml-5 [&_ul]:mt-1 [&_ol]:mt-1"
+            dangerouslySetInnerHTML={{ __html: entry.html_text }}
+          />
+
+          {/* References */}
+          {entry.references.length > 0 &&
+            entry.references.some(ref => ref.reference && ref.reference.trim() !== '') && (
+              <div className="my-3">
+                <h3 className="text-lg font-semibold">References</h3>
+                <div className="flex flex-col gap-3 mb-4">
+                  {entry.references
+                    .filter(ref => ref.reference && ref.reference.trim() !== '')
+                    .map((reference, index) => (
+                      <div key={index} className="flex flex-col">
+                        <span className="text-sm">
+                          <a
+                            href={reference.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:underline"
+                          >
+                            {reference.organisation}
+                          </a>{' '}
+                          - {reference.reference}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+        </div>
+
+        {/* Sidebar */}
+        <div className="mt-4 lg:mt-0 lg:pl-5">
+          {/* Info Table */}
+          <div className="p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+            <h4 className="pb-2 text-lg font-semibold">Information</h4>
+            <h6 className="text-xs font-semibold">CAS number: {entry.cas_number}</h6>
+            <div className="w-full">
+              <table className="w-full">
+                <tbody>
+                  <tr>
+                    <td className="text-muted-foreground font-semibold py-0.5">Class</td>
+                    <td className="text-right py-0.5">{entry.class}</td>
+                  </tr>
+                  <tr>
+                    <td className="text-muted-foreground font-semibold py-0.5">Chemical Formula</td>
+                    <td
+                      className="text-right py-0.5"
+                      dangerouslySetInnerHTML={{ __html: entry.chemical_formula_html }}
+                    />
+                  </tr>
+                  <tr>
+                    <td className="text-muted-foreground font-semibold py-0.5">Molecular Weight</td>
+                    <td className="text-right py-0.5">{entry.molecular_weight}</td>
+                  </tr>
+                  {entry.optimal_conc && (
+                    <tr>
+                      <td className="text-muted-foreground font-semibold py-0.5">Optimal Conc</td>
+                      <td className="text-right py-0.5">{entry.optimal_conc}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Synonyms */}
+          {entry.synonyms.length > 0 && entry.synonyms.some(syn => syn.trim() !== '') && (
+            <div className="my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+              <h3 className="text-lg font-semibold">Synonyms</h3>
+              <h6 className="text-sm text-muted-foreground">Also Known As</h6>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {entry.synonyms.map((synonym, index) => (
+                  <p
+                    key={index}
+                    className="px-2 py-1 border border-border text-muted-foreground rounded-2xl"
+                  >
+                    {synonym}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* GRAS Info */}
+          {entry.gras_info?.found !== undefined && (
+            <div className="flex items-center justify-between my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+              <div>
+                <h6 className="text-xs">{entry.name}</h6>
+                <h3 className="text-xl font-semibold">
+                  {entry.gras_info.found ? 'Is on FDAs GRAS list' : 'Is not on FDAs GRAS list'}
+                </h3>
+              </div>
+              {entry.gras_info.reference_url && (
+                <a
+                  href={entry.gras_info.reference_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xl text-muted-foreground hover:text-foreground"
+                >
+                  <ExternalLink />
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* Cell Info */}
+          {entry.cell_info.length > 0 &&
+            entry.cell_info.some(cell => cell.cellType && cell.cellType.trim() !== '') && (
+              <div className="my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+                <p className="font-semibold">Tested On</p>
+                <h6 className="text-sm text-muted-foreground">Cell Type - Success Rate</h6>
+                <div className="flex flex-col gap-1 mt-2.5">
+                  {entry.cell_info.map((cell, index) => (
+                    <p key={index} className="flex justify-between items-center">
+                      <span>{cell.cellType}</span>
+                      {cell.referenceURL && cell.referenceURL.trim() !== '' ? (
+                        <a
+                          href={cell.referenceURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-muted-foreground hover:underline"
+                        >
+                          <span>{cell.successRate && `(${cell.successRate}%)`}</span>
+                          <MoveUpRight height={18} />
+                        </a>
+                      ) : (
+                        <span className="flex items-center gap-0.5 text-muted-foreground">
+                          {cell.successRate && `(${cell.successRate}%)`}
+                        </span>
+                      )}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          {/* Structure Image */}
+          {entry.structure_image && (
+            <div className="my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px] bg-transparent">
+              <img
+                className="w-full max-w-[400px] rounded-lg dark:bg-white"
+                alt="structural diagram"
+                src={entry.structure_image}
+              />
+            </div>
+          )}
+
+          {/* Safety Document */}
+          {entry.safety_document_sheet && (
+            <div className="flex items-center justify-between my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+              <div>
+                <h6 className="text-sm">Safety Document Sheet</h6>
+                <h3 className="text-base">{entry.name} SDS</h3>
+              </div>
+              <a
+                href={entry.safety_document_sheet}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xl text-muted-foreground"
+              >
+                <MoveUpRight />
+              </a>
+            </div>
+          )}
+
+          {/* Powered By */}
+          <div className="flex items-center justify-between my-3 p-4 border border-border rounded-lg max-w-[930px] lg:max-w-[320px]">
+            <div>
+              <h5 className="text-sm">Powered By</h5>
+              <h1 className="text-2xl font-bold">CryoDAO</h1>
+            </div>
+            <img
+              className="h-11 w-11 invert-0 dark:invert"
+              alt="CryoDao Logo"
+              src="https://cdn.prod.website-files.com/643d6a447c6e1b4184d3ddfd/643d7ebba7e71c58cdb21f5a_CryoDAO-icon-black.svg"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -302,7 +302,7 @@ type SearchBreadcrumbProps = {
 export function SearchBreadcrumb({ searchTerm }: SearchBreadcrumbProps) {
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="font-semibold">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>

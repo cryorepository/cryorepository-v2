@@ -76,7 +76,6 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
 
   // Fetch search results
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-  //const response = await fetch(`${BASE_URL}/api/search`, {
     const response = await fetch(`${BASE_URL}/api/search`, {
     method: "POST",
     credentials: "include",
