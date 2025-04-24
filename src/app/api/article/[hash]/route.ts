@@ -22,7 +22,8 @@ function sanitizeHash(hash: string): string | null {
 // GET /article/:hash
 export async function GET(req: NextRequest, { params }: { params: { hash: string } }) {
   try {
-    const { hash } = params;
+    const routeParams = await params
+    const { hash } = routeParams;
 
     if (!hash) {
       console.error("Hash is undefined");

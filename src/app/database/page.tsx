@@ -1,6 +1,7 @@
 import Link from "next/link"
 import PaginationComponent from "@/components/searchComponents/databasePage/pagination-component"
 import { DatabaseBreadcrumb } from "@/components/searchComponents/databasePage/database-breadcrumb"
+import { FilterPopup } from "./filterPopup"
 
 // Define TypeScript interfaces
 interface Entry {
@@ -52,8 +53,9 @@ export const metadata = {
 };
 
 export default async function IndexPage({ searchParams }: { searchParams: { page?: string; limit?: string } }) {
-  const page = parseInt(searchParams.page || "1", 10);
-  const limit = parseInt(searchParams.limit || "10", 10);
+  const pageParams = await searchParams;
+  const page = parseInt(pageParams.page || "1", 10);
+  const limit = parseInt(pageParams.limit || "10", 10);
 
   // Validate pagination parameters
   if (page < 1 || limit < 1) {
@@ -83,6 +85,8 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
     return (
       <div className="pt-4 mx-auto px-4 py-8 max-w-6xl">
         <DatabaseBreadcrumb />
+
+        <FilterPopup />
 
         <div className="searchResults">
           {data.entries.length > 0 ? (
