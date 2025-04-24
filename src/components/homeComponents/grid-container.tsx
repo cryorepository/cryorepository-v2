@@ -76,7 +76,7 @@ export default function GridContainer() {
           <div className="mx-auto text-center md:text-left">
             <h3 className="font-semibold text-3xl text-grey-800 mb-1 text-white">Made Possible By</h3>
             <Button className="border hover:opacity-100 w-fit bg-white text-black hover:bg-white hover:text-black" asChild>
-              <a className="!gap-0" target="_blank" href="https://www.cryodao.org">
+              <a className="!gap-0" target="_blank" href="https://cryodao.org">
                 Their Website
                 <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
               </a>

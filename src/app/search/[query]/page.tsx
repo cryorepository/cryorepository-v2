@@ -75,8 +75,8 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
   const searchTerm = decodeParams(query);
 
   // Fetch search results
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-    const response = await fetch(`${BASE_URL}/api/search`, {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const response = await fetch(`${API_URL}/api/search`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -133,7 +133,7 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
                 {result.structure_image && (
                   <div className="w-full sm:w-40 flex-shrink-0">
                     <img
-                      className="w-full h-auto rounded-lg border border-input dark:border-none dark:bg-white"
+                      className="w-full h-auto max-h-[100px] object-cover rounded-lg border border-input dark:border-none dark:bg-white"
                       alt="Structural Diagram"
                       src={result.structure_image}
                     />

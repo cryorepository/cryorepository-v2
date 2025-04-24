@@ -34,13 +34,14 @@ const CopyButton: React.FC<CopyButtonProps> = ({ token }) => {
     <Button
       variant="outline"
       size="icon"
+      className="h-8 w-8 sm:h-8"
       onClick={copyToClipboard}
       title="Copy Link"
     >
       {isCopied ? (
-        <Check />
+        <Check className="h-4 w-4" />
       ) : (
-        <Copy />
+        <Copy className="h-4 w-4" />
       )}
     </Button>
   );

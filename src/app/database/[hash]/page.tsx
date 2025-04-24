@@ -503,9 +503,8 @@ interface ArticlePageParams {
 
 async function getArticleData(hash: string): Promise<ArticleData | null> {
   try {
-    // const res = await fetch(`https://api.cryorepository.com/fetch_article`, {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-    const res = await fetch(`${BASE_URL}/api/article/${hash}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${API_URL}/api/article/${hash}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
       next: { revalidate: 3600 },
@@ -608,15 +607,21 @@ export default async function ArticlePage({ params }: ArticlePageParams) {
               </h6>
             </div>
             <div className="flex items-center gap-2.5">
-              <CitePopup citationsData={{name: "Sample Research Paper", date_written: "2023-10-15", written_by: "Doe, J.", hash: "abc123"}} />
-              <CopyButton token={entry.hash} />
+              <CitePopup citationsData={{name: entry.name, date_written: entry.date_written, written_by: entry.written_by, hash: entry.hash}} />
               <ReportError hash={entry.hash} name={entry.name} />
+              <CopyButton token={entry.hash} />
             </div>
           </div>
 
           {/* Main Content */}
           <div
-            className="prose max-w-none mt-4 [&_ul]:ml-5 [&_ol]:ml-5 [&_ul]:mt-1 [&_ol]:mt-1"
+            className="prose max-w-none mt-4
+            [&_ul]:ml-5 [&_ol]:ml-5
+            [&_ul]:mt-1 [&_ol]:mt-1
+            [&_li]:font-semibold
+            [&_h2]:pt-[8px] [&_h2]:pb-[6px]
+            [&_h3]:pt-[8px] [&_h3]:pb-[6px]
+            [&_h4]:pt-[8px] [&_h4]:pb-[6px]" //[&_ul]:ml-5 [&_ol]:ml-5 [&_ul]:mt-1 [&_ol]:mt-1
             dangerouslySetInnerHTML={{ __html: entry.html_text }}
           />
 
@@ -630,12 +635,12 @@ export default async function ArticlePage({ params }: ArticlePageParams) {
                     .filter(ref => ref.reference && ref.reference.trim() !== '')
                     .map((reference, index) => (
                       <div key={index} className="flex flex-col">
-                        <span className="text-sm">
+                        <span className="text-sm text-muted-foreground">
                           <a
                             href={reference.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-muted-foreground hover:underline"
+                            className="hover:underline"
                           >
                             {reference.organisation}
                           </a>{' '}

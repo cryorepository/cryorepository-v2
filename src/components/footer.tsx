@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
                 Reliability
               </a>
               <a
-                href="https://www.cryodao.org/"
+                href="https://cryodao.org/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="CryoDAO"

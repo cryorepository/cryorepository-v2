@@ -17,7 +17,7 @@ interface CitationFormats {
 interface CitationData {
   name: string;
   date_written: string;
-  written_by: string;
+  written_by: string[];
   hash: string;
 }
 
@@ -28,7 +28,7 @@ interface CitePopupProps {
 // Function to create citations in different formats
 function createCitation(data: CitationData): CitationFormats {
   const { name, date_written, written_by, hash } = data;
-  const authors = written_by; // Assuming written_by is the author(s) string
+  const authors = written_by.length > 0 ? written_by.join(", ") : "Cryorepository Foundation";
 
   const date = new Date(date_written);
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -103,7 +103,7 @@ const CitePopup: React.FC<CitePopupProps> = ({ citationsData }) => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 h-8 w-8 sm:h-8 sm:w-auto"
           title="Cite this resource"
         >
           <BookOpen className="h-4 w-4" />

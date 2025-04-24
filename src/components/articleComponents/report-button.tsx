@@ -96,9 +96,11 @@ const ReportError: React.FC<ReportErrorProps> = ({ hash, name }) => {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {/* Trigger Button */}
       <DialogTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2" title="Report an Error">
+        <Button variant="outline" className="flex items-center gap-2 h-8 w-8 sm:h-8 sm:w-auto" title="Report an Error">
           <AlertTriangle className="h-4 w-4" />
-          Report Error
+          <span className="hidden sm:block">
+            Report Error
+          </span>
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px] p-6">

@@ -472,7 +472,7 @@ export function SearchBox() {
                   key={index}
                   className={cn(
                     "px-2 py-1.5 text-sm text-foreground rounded-sm w-full",
-                    "hover:bg-accent hover:text-accent-foreground cursor-pointer",
+                    "hover:bg-accent hover:text-accent-foreground cursor-pointer flex justify-between",
                     focusedIndex === index && "bg-accent text-accent-foreground"
                   )}
                   role="option"
@@ -483,6 +483,9 @@ export function SearchBox() {
                   }}
                 >
                   {result.name}
+                  <span className="text-xs text-muted-foreground font-semibold">
+                    {result.hash}
+                  </span>
                 </Link>
               ))
             ) : (
