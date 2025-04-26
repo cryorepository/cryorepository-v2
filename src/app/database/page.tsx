@@ -1,7 +1,7 @@
 import Link from "next/link"
-import PaginationComponent from "@/components/searchComponents/databasePage/pagination-component"
-import { DatabaseBreadcrumb } from "@/components/searchComponents/databasePage/database-breadcrumb"
-import { FilterPopup } from "./filterPopup"
+import PaginationComponent from "@/components/databasePage/pagination-component"
+import { DatabaseBreadcrumb } from "@/components/databasePage/database-breadcrumb"
+import { FilterPopup } from "@/components/databasePage/filterComponent/filter-popup"
 
 // Define TypeScript interfaces
 interface Entry {
@@ -12,8 +12,8 @@ interface Entry {
 }
 
 interface IndexResponse {
-  filter: string[];
-  uniqueCellTypes: string[];
+  chemClassFilters: string[];
+  cellTypeFilters: string[];
   entries: Entry[];
   total: number;
   page: number;
@@ -55,7 +55,7 @@ export const metadata = {
 export default async function IndexPage({ searchParams }: { searchParams: { page?: string; limit?: string } }) {
   const pageParams = await searchParams;
   const page = parseInt(pageParams.page || "1", 10);
-  const limit = parseInt(pageParams.limit || "10", 10);
+  const limit = parseInt(pageParams.limit || "36", 10);
 
   // Validate pagination parameters
   if (page < 1 || limit < 1) {
@@ -83,10 +83,11 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
     const data: IndexResponse = await response.json();
 
     return (
-      <div className="pt-4 mx-auto px-4 py-8 max-w-6xl">
+      <div className="mx-auto px-4 py-8 max-w-6xl min-h-[calc(100vh-128px)] flex flex-col justify-between">
+        <div>
         <DatabaseBreadcrumb />
 
-        <FilterPopup />
+        <FilterPopup chemClassFilters={data.chemClassFilters} cellTypeFilters={data.cellTypeFilters} />
 
         <div className="searchResults">
           {data.entries.length > 0 ? (
@@ -117,12 +118,15 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
             </div>
           )}
         </div>
+        </div>
 
+        <div>
         <PaginationComponent
           initialData={data}
           page={page}
           limit={limit}
         />
+        </div>
 
         <style>{`
         footer{

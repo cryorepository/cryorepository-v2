@@ -19,8 +19,8 @@ interface Entry {
 }
 
 interface IndexResponse {
-  filter: string[];
-  uniqueCellTypes: string[];
+  chemClassFilters: string[];
+  cellTypeFilters: string[];
   entries: Entry[];
   total: number;
   page: number;
@@ -35,7 +35,7 @@ interface DatabaseClientProps {
 
 const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, page, limit }) => {
   const router = useRouter();
-  const { filter, uniqueCellTypes, total, totalPages, page: currentPage } = initialData;
+  const { chemClassFilters, cellTypeFilters, total, totalPages, page: currentPage } = initialData;
 
   const handlePageChange = (newPage: number) => {
     router.push(`/database?page=${newPage}&limit=${limit}`);
@@ -60,8 +60,6 @@ const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, page,
 
   return (
     <>
-      {/*<FilterDropdown classes={filter} cellTypes={uniqueCellTypes} />*/}
-
       {totalPages > 1 && (
         <Pagination className="mt-6">
           <PaginationContent>

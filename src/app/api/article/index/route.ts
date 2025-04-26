@@ -11,8 +11,8 @@ interface Entry {
 }
 
 interface IndexResponse {
-  filter: string[];
-  uniqueCellTypes: string[];
+  chemClassFilters: string[];
+  cellTypeFilters: string[];
   entries: Entry[];
   total: number;
   page: number;
@@ -25,7 +25,8 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
     //const limit = parseInt(searchParams.get("limit") || "10", 10);
-    const limit = Math.min(parseInt(searchParams.get("limit") || "10", 10), 36);
+    // If limit is not defined go to 36 articles, encode with base_10 then set max to 36 value cannot exceed 36
+    const limit = Math.min(parseInt(searchParams.get("limit") || "36", 10), 36);
 
     // Validate pagination parameters
     if (page < 1 || limit < 1) {
@@ -58,10 +59,10 @@ export async function GET(req: NextRequest) {
     // Calculate total pages
     const totalPages = Math.ceil(total / limit);
 
-    return NextResponse.json(
+    return NextResponse.json<IndexResponse>(
       {
-        filter: classes,
-        uniqueCellTypes,
+        chemClassFilters: classes,
+        cellTypeFilters: uniqueCellTypes,
         entries,
         total,
         page,
