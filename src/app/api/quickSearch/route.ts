@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     try {
       decodedQuery = decodeURIComponent(search_query);
     } catch (e) {
+      console.log(e);
       return NextResponse.json({ error: 'Invalid query encoding.' }, { status: 400 });
     }
 

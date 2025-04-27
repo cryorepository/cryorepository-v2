@@ -8,13 +8,13 @@ import { searchResultsMetadata } from "@/lib/seo"
 import { SearchResponse, SearchPageParams } from "@/types/search"
 import { decodeParams } from "@/utils/decodeParams/search-page"
 
-export async function generateMetadata({ params }: { params: SearchPageParams }) {
+export async function generateMetadata({ params }: { params: Promise<SearchPageParams> }) {
   const { query } = await params
   const decodedToken = decodeParams(query);
   return searchResultsMetadata({ decodedToken, route: query});
 }
 
-export default async function SearchPage({ params }: { params: SearchPageParams }) {
+export default async function SearchPage({ params }: { params: Promise<SearchPageParams> }) {
   const { query } = await params;
   const searchTerm = decodeParams(query);
 

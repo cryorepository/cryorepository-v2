@@ -10,7 +10,7 @@ interface ArticleEntry {
   cas_number: string;
   safety_document_sheet?: string;
   html_text: string;
-  pricing_info?: any;
+  pricing_info?: string[];
   date_written: string;
   written_by: string[];
   synonyms: string[];
@@ -25,5 +25,5 @@ export interface ArticleData {
 }
 
 export interface ArticlePageParams {
-  params: { hash: string };
+  hash: string;
 }

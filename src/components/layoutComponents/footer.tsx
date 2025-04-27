@@ -17,65 +17,65 @@ const Footer: React.FC = () => {
               >
                 Home
               </Link>
-              <a
+              <Link
                 href="/enterprise"
                 aria-label="View our paper repository"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Enterprise Solutions
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/articles/cryopreservation-summary"
                 aria-label="Introduction to Cryopreservation"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Cryopreservation?
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-center text-center py-2 md:py-0">
             <p className="text-text text-base md:text-lg mb-1 md:mb-2">Search</p>
             <div className="flex md:flex-col flex-wrap justify-center gap-x-4">
-              <a
+              <Link
                 href="/search"
                 aria-label="Use our search"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Search
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/database"
                 aria-label="Database Index"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 DB Index
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/references"
                 aria-label="Reference Index"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Reference Index
-              </a>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-center text-center py-2 md:py-0">
             <p className="text-text text-base md:text-lg mb-1 md:mb-2">More</p>
             <div className="flex md:flex-col flex-wrap justify-center gap-x-4">
-              <a
+              <Link
                 href="/report"
                 aria-label="Report a Mistake"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Report a Mistake
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/articles/reliability"
                 aria-label="Reliability Statement"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Reliability
-              </a>
+              </Link>
               <a
                 href="https://cryodao.org/"
                 target="_blank"
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
               height={40}
             />
             <p className="text-muted-foreground text-xs mt-4 max-w-[450px] md:pr-12 mx-auto md:mx-0">
-              Your go-to source for all things cryoprotectants. We're passionate
+              Your go-to source for all things cryoprotectants. We&apos;re passionate
               about providing researchers and scientists with the best information
               and resources. Our mission is to support your work with comprehensive
               and reliable data, fostering a community dedicated to advancing

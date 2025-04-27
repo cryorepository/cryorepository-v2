@@ -12,7 +12,7 @@ import { getFiltersFromParams } from "@/utils/decodeParams/filter-page"
 
 export const metadata: Metadata = filtersMetadata;
 
-export default async function FilterPage({ params }: FilterPageProps) {
+export default async function FilterPage({ params }: { params: Promise<FilterPageProps> }) {
   const pageParams = await params;
   const filters = getFiltersFromParams(pageParams);
 

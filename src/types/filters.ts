@@ -26,7 +26,5 @@ export interface ApiResponse {
 }
 
 export interface FilterPageProps {
-  params: {
-    filters: string;
-  };
+  filters: string;
 }

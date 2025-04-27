@@ -25,7 +25,7 @@ async function getArticleData(hash: string): Promise<ArticleData | null> {
   }
 }
 
-export async function generateMetadata({ params }: ArticlePageParams) {
+export async function generateMetadata({ params }: {params: Promise<ArticlePageParams>}) {
   const pageParams = await params;
   const data = await getArticleData(pageParams.hash);
 
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: ArticlePageParams) {
   }
 }
 
-export default async function ArticlePage({ params }: ArticlePageParams) {
+export default async function ArticlePage({ params }: {params: Promise<ArticlePageParams>}) {
   const pageParams = await params;
   const data = await getArticleData(pageParams.hash);
 

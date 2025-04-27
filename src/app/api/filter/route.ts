@@ -37,7 +37,8 @@ export async function POST(req: NextRequest) {
     const parsedSuccessRateMin = successRateMin ? parseFloat(successRateMin) : null;
     const parsedSuccessRateMax = successRateMax ? parseFloat(successRateMax) : null;
 
-    const query: { class?: any } = {};
+    //const query: { class?: any } = {};
+    const query: { class?: string | { $in: string[] } } = {};
     if (selectedClasses) {
       query.class = Array.isArray(selectedClasses)
         ? { $in: selectedClasses }

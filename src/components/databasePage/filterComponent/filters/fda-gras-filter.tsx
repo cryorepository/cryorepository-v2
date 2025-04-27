@@ -30,7 +30,7 @@ export function GrasList({ foundOnGRASList, setFoundOnGRASList}: GrasProps) {
   
   return (
     <div>
-      <p className="mb-1">Is on FDA's 
+      <p className="mb-1">Is on FDA&apos;s 
         <a 
         className="px-1 hover:underline font-semibold"
         target="_blank"

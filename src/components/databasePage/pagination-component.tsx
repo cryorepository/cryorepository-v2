@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/pagination";
 
 // Define TypeScript interfaces
-interface Entry {
+/*interface Entry {
   hash: string;
   name: string;
   overview: string;
@@ -31,11 +31,24 @@ interface DatabaseClientProps {
   initialData: IndexResponse;
   page: number;
   limit: number;
+}*/
+
+interface IndexResponse {
+  total: number;
+  page: number;
+  totalPages: number;
 }
 
-const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, page, limit }) => {
+interface DatabaseClientProps {
+  initialData: IndexResponse;
+  limit: number;
+}
+
+//const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, page, limit }) => {
+const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, limit }) => {
   const router = useRouter();
-  const { chemClassFilters, cellTypeFilters, total, totalPages, page: currentPage } = initialData;
+  // const { chemClassFilters, cellTypeFilters, total, totalPages, page: currentPage } = initialData;
+  const { total, totalPages, page: currentPage } = initialData;
 
   const handlePageChange = (newPage: number) => {
     router.push(`/database?page=${newPage}&limit=${limit}`);
@@ -46,7 +59,8 @@ const PaginationComponent: React.FC<DatabaseClientProps> = ({ initialData, page,
     const pages = [];
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    // let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
     if (endPage - startPage < maxPagesToShow - 1) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);

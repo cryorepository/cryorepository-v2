@@ -63,7 +63,7 @@ export default function QuoteSlider() {
             <span className="font-semibold">community.</span>
           </h1>
           <p className="text-[calc(1rem+0.5vw)] mb-6 max-w-[390px] text-gray-500 dark:text-gray-400">
-            Here's what other users had to say about{" "}
+            Here&apos;s what other users had to say about{" "}
             <span className="font-semibold">CryoRepository.</span>
           </p>
           <div className="flex items-center gap-2">

@@ -10,7 +10,7 @@ import { IndexResponse } from "@/types/database"
 
 export const metadata: Metadata = databaseIndexMetadata;
 
-export default async function IndexPage({ searchParams }: { searchParams: { page?: string; limit?: string } }) {
+export default async function IndexPage({ searchParams }: { searchParams: Promise<{ page?: string; limit?: string }> }) {
   const pageParams = await searchParams;
   const page = parseInt(pageParams.page || "1", 10);
   const limit = parseInt(pageParams.limit || "36", 10);
@@ -81,7 +81,7 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
         <div>
         <PaginationComponent
           initialData={data}
-          page={page}
+          //page={page}
           limit={limit}
         />
         </div>
