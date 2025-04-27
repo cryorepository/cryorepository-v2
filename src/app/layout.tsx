@@ -1,9 +1,9 @@
 import { Geist, Geist_Mono } from "next/font/google"
+
 import "./globals.css"
+import Navbar from "@/components/layoutComponents/navbar"
+import Footer from "@/components/layoutComponents/footer"
 import { ThemeProvider } from "@/lib/theme-provider"
-import type { Metadata } from 'next'
-import Navbar from "@/components/navbar"
-import Footer from "@/components/footer"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,15 +14,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
-export const metadata: Metadata = {
-  icons: {
-    icon: [
-      { url: '/favicon.png', type: 'image/png' },
-    ],
-  },
-  keywords: "Cryopreservation, Cryorepository, Cryo Repository, Cryoprotectants, Preservation, Cryobiology, Cryogenic Storage, Cold Storage, Biopreservation, Cryopreservation Research, CryoDAO",
-};
 
 export default function RootLayout({
   children,

@@ -91,7 +91,9 @@ export default function GridContainer() {
         </div>
       </div>
 
-      <StepsComponent />
+      <div className="border-t border-color mt-6">
+        <StepsComponent />
+      </div>
 
       <div className="w-full mx-auto mb-6 border-b border-color relative">
 
@@ -130,7 +132,7 @@ export default function GridContainer() {
         </div>
       </div>
 
-      <div className="border-y border-color mt-6">
+      <div className="border-t border-color mt-6">
         <QuoteSlider />
       </div>
     </div>

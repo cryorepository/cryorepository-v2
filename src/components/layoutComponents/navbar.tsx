@@ -1,8 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import { NavMenu } from "@/components/navbarComponents/nav-menu"
-import { ThemeTrigger } from "@/components/navbarComponents/theme-trigger"
-import { SearchInput } from "@/components/navbarComponents/search-input"
+import { NavMenu } from "@/components/layoutComponents/navbarComponents/nav-menu"
+import { ThemeTrigger } from "@/components/layoutComponents/navbarComponents/theme-trigger"
+import { SearchInput } from "@/components/layoutComponents/navbarComponents/search-input"
 
 const Navbar: React.FC = () => {
   return (

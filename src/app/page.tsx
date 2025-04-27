@@ -1,36 +1,9 @@
 import type { Metadata } from "next"
-import GridContainer from "@/components/homeComponents/grid-container"
 
-export const metadata: Metadata = {
-  title: 'CryoRepository - Discover Cryopreservation | Cryo Repo',
-  description: 'Your source of information on cryoprotective agents.',
-  alternates: {
-    canonical: 'https://www.cryorepository.com',
-  },
-  openGraph: {
-    siteName: 'CryoRepository',
-    title: 'CryoRepository - Discover Cryopreservation',
-    description: 'Your source of information on cryoprotective agents.',
-    images: [
-      {
-        url: '/favicon.png',
-        width: 500,
-        height: 500,
-        alt: 'CryoRepository preview image',
-      },
-    ],
-    url: 'https://www.cryorepository.com',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'CryoRepository - Discover Cryopreservation',
-    description: 'Your source of information on cryoprotective agents.',
-    images: [
-      '/favicon.png',
-    ],
-  },
-};
+import GridContainer from "@/components/homeComponents/grid-container"
+import { homeMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = homeMetadata;
 
 export default function Home() {
   return (

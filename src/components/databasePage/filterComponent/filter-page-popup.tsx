@@ -13,6 +13,7 @@ import { ChemClass } from "@/components/databasePage/filterComponent/filters/che
 import { GrasList } from "@/components/databasePage/filterComponent/filters/fda-gras-filter"
 import { MolecularWeight } from "@/components/databasePage/filterComponent/filters/molecular-weight-filter"
 import { CellComponent } from "@/components/databasePage/filterComponent/filters/tested-cell-filter"
+import { usePathname } from "next/navigation";
 
 interface FilterParams {
   selectedClasses: string[];
@@ -49,8 +50,11 @@ export function FilterPopup({chemClassFilters, cellTypeFilters, params}: FilterP
   const [cellType, setCellType] = useState<string>(params.cellType);
   const [successRateMin, setSuccessRateMin] = useState<number | string>(params.successRateMin);
   const [successRateMax, setSuccessRateMax] = useState<number | string>(params.successRateMax);
+
   const [reset, setReset] = useState(false);
   const [filterError, setFilterError] = useState<string>("");
+
+  const pathname = usePathname();
 
   const applyFilters = () => {
     const params = new URLSearchParams();
@@ -136,10 +140,14 @@ export function FilterPopup({chemClassFilters, cellTypeFilters, params}: FilterP
         }
       }
     }
-  
-    
+
     const redirectUrl = hasFilters ? `/filter/${params.toString()}` : '/database';
-    window.location.href = redirectUrl;
+    if (pathname !== redirectUrl) {
+      window.location.href = redirectUrl;
+    } else {
+      setFilterError("This filter has already been applied")
+      return;
+    }
   };
 
   const resetFilters = () => {

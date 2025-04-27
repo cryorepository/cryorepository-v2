@@ -1,9 +1,13 @@
 // /app/filters/[filters]/page.tsx
-import { Metadata } from "next"
-import FilterPopup from "@/components/databasePage/filterComponent/filter-page-popup"
-import { notFound } from "next/navigation"
-import { FilterBreadcrumb } from "@/components/databasePage/filterComponent/filters/filter-breadcrumb"
 import Link from "next/link"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+
+import FilterPopup from "@/components/databasePage/filterComponent/filter-page-popup"
+import { FilterBreadcrumb } from "@/components/databasePage/filterComponent/filters/filter-breadcrumb"
+import { filtersMetadata } from "@/lib/seo"
+
+export const metadata: Metadata = filtersMetadata;
 
 // Define interfaces for data structures
 interface FilterParams {
@@ -36,7 +40,7 @@ interface ApiResponse {
 // Interface for page props
 interface FilterPageProps {
   params: {
-    filters: string; // The dynamic route segment containing query string
+    filters: string;
   };
 }
 
@@ -64,42 +68,8 @@ const getFiltersFromParams = (params: { filters: string }): FilterParams => {
       }
     }
   });
-
-  // console.log("Parsed Filters:");
-  // console.log(JSON.stringify(filters, null, 2));
-
+  
   return filters;
-};
-
-// Metadata (same as provided)
-export const metadata: Metadata = {
-  title: "Filter Data | CryoRepository",
-  description: "Explore our comprehensive database index at CryoRepository.",
-  alternates: {
-    canonical: "https://www.cryorepository.com/database",
-  },
-  openGraph: {
-    title: "Filter Data | CryoRepository",
-    description: "Explore our comprehensive database index at CryoRepository.",
-    images: [
-      {
-        url: "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-        width: 500,
-        height: 500,
-        alt: "CryoRepository preview image",
-      },
-    ],
-    url: "https://www.cryorepository.com/database",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Filter Data | CryoRepository",
-    description: "Explore our comprehensive database index at CryoRepository.",
-    images: [
-      "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-    ],
-  },
 };
 
 export default async function FilterPage({ params }: FilterPageProps) {
@@ -185,9 +155,9 @@ export default async function FilterPage({ params }: FilterPageProps) {
                   )}
               </div>
               {result.structure_image && (
-                <div className="w-full sm:w-40 flex-shrink-0">
+                <div className="w-full max-h-[100px] sm:w-40 flex-shrink-0 items-center flex dark:bg-white rounded-md dark:border-none border border-input">
                   <img
-                    className="w-full h-auto max-h-[100px] object-cover rounded-lg border border-input dark:border-none dark:bg-white"
+                    className="w-full h-auto max-h-[100px] object-cover rounded-md"
                     alt="Structural Diagram"
                     src={result.structure_image}
                   />

@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
-import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb";
 import { CheckCheck, Upload, MoveUpRight, ExternalLink } from 'lucide-react';
+
 import CitePopup from "@/components/articleComponents/cite-button"
 import CopyButton from "@/components/articleComponents/copy-button"
 import ReportError from "@/components/articleComponents/report-button"
+import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb";
+import { articleResultMetadata, notFoundMetadata } from "@/lib/seo";
 
 interface ArticleEntry {
   name: string;
@@ -56,6 +58,24 @@ export async function generateMetadata({ params }: ArticlePageParams) {
   const data = await getArticleData(pageParams.hash);
 
   if (!data) {
+    return notFoundMetadata;
+  } else {
+    const { entry } = data;
+    return articleResultMetadata({ 
+      entryName: entry.name, 
+      hash: entry.hash,
+      overview: entry.overview,
+      image: entry.structure_image
+    });
+  }
+}
+
+/*
+export async function generateMetadata({ params }: ArticlePageParams) {
+  const pageParams = await params;
+  const data = await getArticleData(pageParams.hash);
+
+  if (!data) {
     return {
       title: "Article Not Found | CryoRepository",
       description: "The requested article could not be found.",
@@ -95,7 +115,7 @@ export async function generateMetadata({ params }: ArticlePageParams) {
       ],
     },
   };
-}
+}*/
 
 export default async function ArticlePage({ params }: ArticlePageParams) {
   const pageParams = await params;

@@ -1,7 +1,12 @@
 import Link from "next/link"
+import { Metadata } from "next"
+
 import PaginationComponent from "@/components/databasePage/pagination-component"
 import { DatabaseBreadcrumb } from "@/components/databasePage/database-breadcrumb"
 import { FilterPopup } from "@/components/databasePage/filterComponent/filter-popup"
+import { databaseIndexMetadata } from "@/lib/seo"
+
+export const metadata: Metadata = databaseIndexMetadata;
 
 // Define TypeScript interfaces
 interface Entry {
@@ -19,38 +24,6 @@ interface IndexResponse {
   page: number;
   totalPages: number;
 }
-
-// Metadata
-export const metadata = {
-  title: "Database Index | CryoRepository",
-  description: "Explore our comprehensive database index at CryoRepository.",
-  alternates: {
-    canonical: "https://www.cryorepository.com/database",
-  },
-  openGraph: {
-    siteName: "CryoRepository",
-    title: "Database Index | CryoRepository",
-    description: "Explore our comprehensive database index at CryoRepository.",
-    images: [
-      {
-        url: "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-        width: 500,
-        height: 500,
-        alt: "CryoRepository preview image",
-      },
-    ],
-    url: "https://www.cryorepository.com/database",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Database Index | CryoRepository",
-    description: "Explore our comprehensive database index at CryoRepository.",
-    images: [
-      "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-    ],
-  },
-};
 
 export default async function IndexPage({ searchParams }: { searchParams: { page?: string; limit?: string } }) {
   const pageParams = await searchParams;
@@ -102,9 +75,9 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
                   <p className="text-muted-foreground line-clamp-3 leading-[1.3]">{result.overview}</p>
                 </div>
                 {result.structure_image && (
-                  <div className="w-full sm:w-40 flex-shrink-0">
+                  <div className="w-full sm:w-40 flex-shrink-0 items-center flex dark:bg-white rounded-md dark:border-none border border-input">
                     <img
-                      className="w-full h-auto max-h-[100px] object-cover rounded-lg border border-input dark:border-none dark:bg-white"
+                      className="w-full h-auto max-h-[100px] object-cover rounded-md"
                       alt="Structural Diagram"
                       src={result.structure_image}
                     />

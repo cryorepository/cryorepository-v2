@@ -1,40 +1,12 @@
-import type { Metadata } from "next"
 import Link from "next/link"
+import type { Metadata } from "next"
+
 import { Button } from "@/components/ui/button"
 import { ArrowBigRightDash } from "lucide-react"
-
 import { SearchBox } from "@/components/searchComponents/search-box";
+import { searchMetadata } from "@/lib/seo"
 
-export const metadata: Metadata = {
-  title: 'Search CryoRepository - Discover Cryopreservation | Cryo Repo',
-  description: 'Your source of information on cryoprotective agents.',
-  alternates: {
-    canonical: 'https://www.cryorepository.com/search',
-  },
-  openGraph: {
-    siteName: 'CryoRepository',
-    title: 'Search CryoRepository - Discover Cryopreservation',
-    description: 'Your source of information on cryoprotective agents.',
-    images: [
-      {
-        url: '/favicon.png',
-        width: 500,
-        height: 500,
-        alt: 'CryoRepository preview image',
-      },
-    ],
-    url: 'https://www.cryorepository.com/search',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Search CryoRepository - Discover Cryopreservation',
-    description: 'Your source of information on cryoprotective agents.',
-    images: [
-      '/favicon.png',
-    ],
-  },
-};
+export const metadata: Metadata = searchMetadata;
 
 export default function Search() {
   return (

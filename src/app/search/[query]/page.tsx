@@ -1,8 +1,9 @@
 // app/search/[query]/page.tsx
-import { Metadata } from "next"
-import { notFound } from 'next/navigation'
 import Link from "next/link"
+import { notFound } from 'next/navigation'
+
 import { SearchBreadcrumb } from "@/components/searchComponents/searchPage/search-breadcrumb"
+import { searchResultsMetadata } from "@/lib/seo";
 
 // Define interfaces for API response and params
 interface SearchResult {
@@ -30,44 +31,10 @@ const decodeParams = (query: string): string => {
   return decodedToken.replace(/^query=/, "")
 }
 
-// Generate metadata for SEO
-export const generateMetadata = async ({
-  params,
-}: {
-  params: SearchPageParams
-}): Promise<Metadata> => {
-  const { query } = await params;
-  const fullParam = await params;
+export async function generateMetadata({ params }: { params: SearchPageParams }) {
+  const { query } = await params
   const decodedToken = decodeParams(query);
-
-  return {
-    title: `${decodedToken} | Search Results CryoRepository`,
-    description: `${decodedToken} | Search Results CryoRepository`,
-    alternates: {
-      canonical: "https://www.cryorepository.com/search",
-    },
-    openGraph: {
-      siteName: "CryoRepository",
-      title: `${decodedToken} | Search Results CryoRepository`,
-      description: `${decodedToken} | Search Results CryoRepository`,
-      images: [
-        {
-          url: "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-          alt: "CryoRepository preview image",
-        },
-      ],
-      url: `https://cryorepository.com/search/${fullParam}`,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${decodedToken} | Search Results CryoRepository`,
-      description: `${decodedToken} | Search Results CryoRepository`,
-      images: [
-        "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-      ],
-    },
-  }
+  return searchResultsMetadata({ decodedToken, route: query});
 }
 
 export default async function SearchPage({ params }: { params: SearchPageParams }) {
@@ -131,9 +98,9 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
                   <p className="text-muted-foreground line-clamp-3 leading-[1.3]">{result.overview}</p>
                 </div>
                 {result.structure_image && (
-                  <div className="w-full sm:w-40 flex-shrink-0">
+                  <div className="w-full sm:w-40 flex-shrink-0 items-center flex dark:bg-white rounded-md dark:border-none border border-input">
                     <img
-                      className="w-full h-auto max-h-[100px] object-cover rounded-lg border border-input dark:border-none dark:bg-white"
+                      className="w-full h-auto max-h-[100px] object-cover rounded-md"
                       alt="Structural Diagram"
                       src={result.structure_image}
                     />
