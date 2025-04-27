@@ -1,45 +1,17 @@
-import { notFound } from "next/navigation";
-import { CheckCheck, Upload, MoveUpRight, ExternalLink } from 'lucide-react';
+import { notFound } from "next/navigation"
+import { CheckCheck, Upload, MoveUpRight, ExternalLink } from 'lucide-react'
 
 import CitePopup from "@/components/articleComponents/cite-button"
 import CopyButton from "@/components/articleComponents/copy-button"
 import ReportError from "@/components/articleComponents/report-button"
-import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb";
-import { articleResultMetadata, notFoundMetadata } from "@/lib/seo";
+import { SearchBreadcrumb } from "@/components/articleComponents/article-breadcrumb"
 
-interface ArticleEntry {
-  name: string;
-  hash: string;
-  class: string;
-  chemical_formula_html: string;
-  molecular_formula_html: string;
-  molecular_weight: string;
-  optimal_conc: string;
-  structure_image?: string;
-  cas_number: string;
-  safety_document_sheet?: string;
-  html_text: string;
-  pricing_info?: any;
-  date_written: string;
-  written_by: string[];
-  synonyms: string[];
-  cell_info: Array<{ cellType: string; successRate?: string; referenceURL?: string }>;
-  references: Array<{ reference: string; url: string; organisation: string }>;
-  gras_info?: { found: boolean; reference_url?: string };
-  overview?: string;
-}
-
-interface ArticleData {
-  entry: ArticleEntry;
-}
-
-interface ArticlePageParams {
-  params: { hash: string };
-}
+import { articleResultMetadata, notFoundMetadata } from "@/lib/seo"
+import { ArticleData, ArticlePageParams } from "@/types/article"
 
 async function getArticleData(hash: string): Promise<ArticleData | null> {
   try {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
     const res = await fetch(`${API_URL}/api/article/${hash}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -70,53 +42,6 @@ export async function generateMetadata({ params }: ArticlePageParams) {
   }
 }
 
-/*
-export async function generateMetadata({ params }: ArticlePageParams) {
-  const pageParams = await params;
-  const data = await getArticleData(pageParams.hash);
-
-  if (!data) {
-    return {
-      title: "Article Not Found | CryoRepository",
-      description: "The requested article could not be found.",
-    };
-  }
-
-  const { entry } = data;
-
-  return {
-    title: `${entry.name} | CryoRepository`,
-    description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
-    alternates: {
-      canonical: `https://www.cryorepository.com/database/${entry.hash}`,
-    },
-    openGraph: {
-      siteName: "CryoRepository",
-      title: `${entry.name} | CryoRepository`,
-      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
-      images: [
-        {
-          url:
-            entry.structure_image ||
-            "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-          alt: `${entry.name} structure`,
-        },
-      ],
-      url: `https://www.cryorepository.com/database/${entry.hash}`,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: entry.name,
-      description: entry.overview || `Learn about ${entry.name} at CryoRepository`,
-      images: [
-        entry.structure_image ||
-          "https://cdn.glitch.global/21a2d050-b3c7-4611-8e67-c6f3ae33f0df/favicon.png?v=1720056814938",
-      ],
-    },
-  };
-}*/
-
 export default async function ArticlePage({ params }: ArticlePageParams) {
   const pageParams = await params;
   const data = await getArticleData(pageParams.hash);
@@ -134,7 +59,7 @@ export default async function ArticlePage({ params }: ArticlePageParams) {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] max-w-[1800px] pt-2 mx-auto">
         {/* Main Content */}
         <div className="flex flex-col mb-8">
-          <h1 className="flex items-center gap-1 flex-wrap text-3xl font-bold">
+          <h1 className="flex items-center gap-1 flex-wrap text-3xl font-semibold">
             {entry.name}
             {entry.chemical_formula_html && (
               <span className="flex items-center gap-1 max-md:hidden">
@@ -147,7 +72,7 @@ export default async function ArticlePage({ params }: ArticlePageParams) {
           <div className="flex justify-between items-center pt-1 max-md:flex-col max-md:items-start max-md:gap-1">
             <div className="flex items-center gap-1 text-muted-foreground">
               <Upload height={14} width={14} />
-              <h5 className="text-sm font-semibold">
+              <h5 className="text-sm font-medium">
                 Written by
                 <span className="pl-[2px]">
                   {entry.written_by && entry.written_by.length > 0

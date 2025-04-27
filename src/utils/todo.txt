@@ -1,1 +1,0 @@
-add functions like decode page params and so on

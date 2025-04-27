@@ -3,33 +3,10 @@ import Link from "next/link"
 import { notFound } from 'next/navigation'
 
 import { SearchBreadcrumb } from "@/components/searchComponents/searchPage/search-breadcrumb"
-import { searchResultsMetadata } from "@/lib/seo";
 
-// Define interfaces for API response and params
-interface SearchResult {
-  hash: string
-  name: string
-  overview: string
-  structure_image?: string
-}
-
-interface SearchResponse {
-  response: {
-    search_results: SearchResult[]
-    dym?: string
-    dym_href?: string
-  }
-}
-
-interface SearchPageParams {
-  query: string
-}
-
-// Utility function to extract search term
-const decodeParams = (query: string): string => {
-  const decodedToken = decodeURIComponent(query)
-  return decodedToken.replace(/^query=/, "")
-}
+import { searchResultsMetadata } from "@/lib/seo"
+import { SearchResponse, SearchPageParams } from "@/types/search"
+import { decodeParams } from "@/utils/decodeParams/search-page"
 
 export async function generateMetadata({ params }: { params: SearchPageParams }) {
   const { query } = await params
@@ -42,7 +19,7 @@ export default async function SearchPage({ params }: { params: SearchPageParams 
   const searchTerm = decodeParams(query);
 
   // Fetch search results
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
     const response = await fetch(`${API_URL}/api/search`, {
     method: "POST",
     credentials: "include",

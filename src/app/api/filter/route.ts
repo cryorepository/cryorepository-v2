@@ -18,28 +18,6 @@ interface RequestBody {
   filters: FilterInput;
 }
 
-interface Article {
-  name: string;
-  hash: string;
-  class?: string;
-  overview: string;
-  structure_image?: string;
-  molecular_weight?: string;
-  sorted_cell_info?: { cellType: string; successRate: string }[];
-  gras_info?: { found: boolean };
-}
-
-interface ResponseData {
-  results: Article[];
-  classes: string[];
-  uniqueCellTypes: string[];
-}
-
-interface ErrorResponse {
-  message: string;
-  error: unknown;
-}
-
 // Use Mongoose's PipelineStage type
 type PipelineStage = mongoose.PipelineStage;
 

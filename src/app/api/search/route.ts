@@ -24,10 +24,6 @@ interface SearchResponse {
   };
 }
 
-interface ErrorResponse {
-  error: string;
-}
-
 export async function POST(req: NextRequest) {
   try {
 

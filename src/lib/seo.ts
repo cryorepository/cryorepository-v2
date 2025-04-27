@@ -38,7 +38,7 @@ function createMetadata({
   siteName?: string;
 }): Metadata {
   return {
-    metadataBase: new URL(`${process.env.NEXT_PUBLIC_API_URL}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
     title: `${title} | CryoRepository`,
     description,
     alternates: {

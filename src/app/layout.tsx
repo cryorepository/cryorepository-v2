@@ -1,19 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google"
-
 import "./globals.css"
 import Navbar from "@/components/layoutComponents/navbar"
 import Footer from "@/components/layoutComponents/footer"
 import { ThemeProvider } from "@/lib/theme-provider"
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { geistSans, geistMono } from "@/lib/fonts";
 
 export default function RootLayout({
   children,

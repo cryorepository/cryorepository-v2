@@ -11,7 +11,7 @@ import {
 export function DatabaseBreadcrumb() {
 
   return (
-    <Breadcrumb className="font-semibold mb-6">
+    <Breadcrumb className="mb-6">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>

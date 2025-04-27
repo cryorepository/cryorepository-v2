@@ -15,7 +15,7 @@ type ArticleBreadcrumbProps = {
 export function SearchBreadcrumb({ agentName }: ArticleBreadcrumbProps) {
 
   return (
-    <Breadcrumb className="font-semibold">
+    <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink href="/database">Cryoprotectant Database</BreadcrumbLink>

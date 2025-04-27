@@ -4,26 +4,11 @@ import { Metadata } from "next"
 import PaginationComponent from "@/components/databasePage/pagination-component"
 import { DatabaseBreadcrumb } from "@/components/databasePage/database-breadcrumb"
 import { FilterPopup } from "@/components/databasePage/filterComponent/filter-popup"
+
 import { databaseIndexMetadata } from "@/lib/seo"
+import { IndexResponse } from "@/types/database"
 
 export const metadata: Metadata = databaseIndexMetadata;
-
-// Define TypeScript interfaces
-interface Entry {
-  hash: string;
-  name: string;
-  overview: string;
-  structure_image?: string;
-}
-
-interface IndexResponse {
-  chemClassFilters: string[];
-  cellTypeFilters: string[];
-  entries: Entry[];
-  total: number;
-  page: number;
-  totalPages: number;
-}
 
 export default async function IndexPage({ searchParams }: { searchParams: { page?: string; limit?: string } }) {
   const pageParams = await searchParams;
@@ -38,7 +23,7 @@ export default async function IndexPage({ searchParams }: { searchParams: { page
   // Fetch data server-side
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/article/index?page=${page}&limit=${limit}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/article/index?page=${page}&limit=${limit}`,
       {
         method: "GET",
         credentials: "include",

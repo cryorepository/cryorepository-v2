@@ -6,11 +6,6 @@ interface SearchRequestBody {
   search_query?: string;
 }
 
-/*interface SearchResponse {
-  message: string;
-  results: string[];
-}*/
-
 interface SearchResultItem {
   name: string;
   hash: string;
@@ -19,10 +14,6 @@ interface SearchResultItem {
 interface SearchResponse {
   message: string;
   results: SearchResultItem[];
-}
-
-interface ErrorResponse {
-  error: string;
 }
 
 export async function POST(req: NextRequest) {

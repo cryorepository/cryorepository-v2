@@ -5,79 +5,19 @@ import { notFound } from "next/navigation"
 
 import FilterPopup from "@/components/databasePage/filterComponent/filter-page-popup"
 import { FilterBreadcrumb } from "@/components/databasePage/filterComponent/filters/filter-breadcrumb"
+
 import { filtersMetadata } from "@/lib/seo"
+import { ApiResponse, FilterPageProps } from "@/types/filters"
+import { getFiltersFromParams } from "@/utils/decodeParams/filter-page"
 
 export const metadata: Metadata = filtersMetadata;
-
-// Define interfaces for data structures
-interface FilterParams {
-  selectedClasses?: string[];
-  GRAS?: string;
-  cellType?: string;
-  weightRangeMin?: string;
-  weightRangeMax?: string;
-  successRateMin?: string;
-  successRateMax?: string;
-  [key: string]: string | string[] | undefined;
-}
-
-interface SearchResult {
-  hash: string;
-  name: string;
-  class?: string;
-  overview: string;
-  structure_image?: string;
-  molecular_weight?: string;
-  sorted_cell_info?: { cellType: string; successRate: string }[];
-}
-
-interface ApiResponse {
-  classes: string[];
-  uniqueCellTypes: string[];
-  results: SearchResult[];
-}
-
-// Interface for page props
-interface FilterPageProps {
-  params: {
-    filters: string;
-  };
-}
-
-// Function to parse URL parameters
-const getFiltersFromParams = (params: { filters: string }): FilterParams => {
-  const decodedParams = decodeURIComponent(params.filters);
-  const filters: FilterParams = {};
-
-  decodedParams.split("&").forEach((param) => {
-    const [key, value] = param.split("=");
-
-    if (value) {
-      const processedValue = value.replace(/\+/g, " ").trim();
-
-      if (processedValue) {
-        if (processedValue.includes(",")) {
-          const filteredArray = processedValue
-            .split(",")
-            .map((v) => v.trim())
-            .filter((v) => v);
-          if (filteredArray.length > 0) filters[key] = filteredArray;
-        } else {
-          filters[key] = processedValue;
-        }
-      }
-    }
-  });
-  
-  return filters;
-};
 
 export default async function FilterPage({ params }: FilterPageProps) {
   const pageParams = await params;
   const filters = getFiltersFromParams(pageParams);
 
   // Fetch data from API
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/filter`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/filter`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
