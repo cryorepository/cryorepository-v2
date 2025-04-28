@@ -2,7 +2,8 @@ import "./globals.css"
 import Navbar from "@/components/layoutComponents/navbar"
 import Footer from "@/components/layoutComponents/footer"
 import { ThemeProvider } from "@/lib/theme-provider"
-import { geistSans, geistMono } from "@/lib/fonts";
+import { geistSans, geistMono } from "@/lib/fonts"
+import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({
   children,
@@ -20,6 +21,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
