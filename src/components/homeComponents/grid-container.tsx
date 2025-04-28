@@ -119,10 +119,10 @@ export default function GridContainer() {
                   fill="currentColor"
                 ></path>
               </svg>
-              <p className="font-serif text-sm">Lifetime Analytics</p>
+              <p className="font-serif text-sm">Cryoprotective Agent Database</p>
             </div>
             <p className="mt-4 text-2xl md:text-2xl font-semibold text-muted-foreground">
-              <span className="text-foreground">Data is our thing.</span> We strive to make transparency accessible to both retail and VC investors.
+              <span className="text-foreground">Preservation starts here.</span> Accuracy is everything, we organize data to ensure clarity and confidence.
             </p>
           </div>
 
