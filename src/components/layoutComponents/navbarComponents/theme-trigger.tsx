@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 
 export function ThemeTrigger() {
-  const { theme, resolvedTheme, setTheme } = useTheme();
+  // const { theme, resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
