@@ -7,9 +7,9 @@ import { SearchInput } from "@/components/layoutComponents/navbarComponents/sear
 const Navbar: React.FC = () => {
   return (
     <nav className="fixed bg-background top-0 h-16 w-full flex items-center justify-between z-10 border-b border-color">
-      <div className="flex align-center gap-6">
+      <div className="flex items-center gap-6">
         <Link aria-label="Home" href="/" className="flex items-center gap-1.5 ml-5 h-10">
-          <Image src="/logo.png" width={28} height={28} className="select-none h-8 w-8 pointer-events-none [html.light_&]:brightness-0" alt="Logo Image" />
+          <Image src="/assets/logo.png" width={28} height={28} className="select-none h-8 w-8 pointer-events-none [html.light_&]:brightness-0" alt="Logo Image" />
           <h2 className="max-[400px]:hidden font-semibold text-xl">
             CryoRepository
           </h2>

@@ -109,7 +109,7 @@ const ReportError: React.FC<ReportErrorProps> = ({ hash, name }) => {
             <div className="flex items-center justify-between">
               <DialogTitle className="flex items-center gap-2">
                 <Image
-                  src="/logo.png"
+                  src="/assets/logo.png"
                   className="[html.light_&]:brightness-0"
                   alt="CryoRepository Logo"
                   width={24}

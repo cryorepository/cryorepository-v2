@@ -17,7 +17,7 @@ export default function GridContainer() {
             <h1 className="text-3xl lg:text-5xl font-semibold pb-2">
               Cryoprotective Agents Made Clear
             </h1>
-            <Button className="rounded-full w-fit flex gap-0" asChild>
+            <Button className="rounded-full w-fit flex gap-0 sm:text-sm text-xs" asChild>
             <Link href="/search">
               Search our CPA Database
               <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
@@ -60,6 +60,42 @@ export default function GridContainer() {
           <p className="text-sm px-4">
             Cryoprotectant Families Indexed
           </p>
+        </div>
+      </div>
+
+      <div className="w-full mx-auto mb-6 border-b border-color relative">
+
+        <div className="absolute w-full flex justify-evenly h-full z-[-1]">
+          <div className="border-l border-dashed border-color w-1 h-full"></div>
+          <div className="border-l border-dashed border-color w-1 h-full"></div>
+        </div>
+
+
+        <div className="flex flex-col md:flex-row items-center max-w-[1100px] mx-auto">
+          <div className="flex-1 p-8 flex justify-center">
+            <img src="/assets/mockup_laptop_v2.png" alt="Globe Poster" className="w-auto h-[250px] object-contain" />
+          </div>
+
+          <div className="flex-1 p-8">
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16">
+                <path fillRule="evenodd" clipRule="evenodd" d="M14.7477 0.293701L0.747695 5.2937L0.730713 6.70002L6.81589 9.04047C6.88192 9.06586 6.93409 9.11804 6.95948 9.18406L9.29994 15.2692L10.7063 15.2523L15.7063 1.25226L14.7477 0.293701ZM7.31426 7.62503L3.15693 6.02605L12.1112 2.8281L7.31426 7.62503ZM8.37492 8.68569L9.9739 12.843L13.1719 3.88876L8.37492 8.68569Z" fill="currentColor"></path>
+              </svg>
+              <p className="text-sm">CryoRepository AI</p>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="mt-4 text-2xl md:text-2xl font-semibold text-muted-foreground">
+                <span className="text-foreground">Meet your cryopreservation companion.</span> Driven by AI, built for precision — organizing cryoprotectant data you can trust.
+              </p>
+
+              <Button asChild className="w-fit rounded-full">
+                <a target="_blank" rel="noopener noreferrer" href="https://ai.cryorepository.com/">
+                  Visit Website
+                  <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -119,7 +155,7 @@ export default function GridContainer() {
                   fill="currentColor"
                 ></path>
               </svg>
-              <p className="font-serif text-sm">Cryoprotective Agent Database</p>
+              <p className="text-sm">Cryoprotective Agent Database</p>
             </div>
             <p className="mt-4 text-2xl md:text-2xl font-semibold text-muted-foreground">
               <span className="text-foreground">Preservation starts here.</span> Accuracy is everything, we organize data to ensure clarity and confidence.

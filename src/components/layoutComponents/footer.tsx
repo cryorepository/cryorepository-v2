@@ -18,37 +18,24 @@ const Footer: React.FC = () => {
                 Home
               </Link>
               <Link
-                href="/enterprise"
-                aria-label="View our paper repository"
+                href="/search"
+                aria-label="Search"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
-                Enterprise Solutions
-              </Link>
-              <Link
-                href="/articles/cryopreservation-summary"
-                aria-label="Introduction to Cryopreservation"
-                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
-              >
-                Cryopreservation?
+                Search
               </Link>
             </div>
           </div>
           <div className="flex flex-col items-center text-center py-2 md:py-0">
             <p className="text-text text-base md:text-lg mb-1 md:mb-2">Search</p>
             <div className="flex md:flex-col flex-wrap justify-center gap-x-4">
-              <Link
-                href="/search"
-                aria-label="Use our search"
-                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
-              >
-                Search
-              </Link>
+              
               <Link
                 href="/database"
                 aria-label="Database Index"
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
-                DB Index
+                Database Index
               </Link>
               <Link
                 href="/references"
@@ -62,20 +49,16 @@ const Footer: React.FC = () => {
           <div className="flex flex-col items-center text-center py-2 md:py-0">
             <p className="text-text text-base md:text-lg mb-1 md:mb-2">More</p>
             <div className="flex md:flex-col flex-wrap justify-center gap-x-4">
-              <Link
-                href="/report"
-                aria-label="Report a Mistake"
-                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
+              <a
+                href="https://ai.cryorepository.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Our AI Agent"
+                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white flex items-center justify-center"
               >
-                Report a Mistake
-              </Link>
-              <Link
-                href="/articles/reliability"
-                aria-label="Reliability Statement"
-                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
-              >
-                Reliability
-              </Link>
+                Our AI Agent
+                <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
+              </a>
               <a
                 href="https://cryodao.org/"
                 target="_blank"
@@ -97,7 +80,7 @@ const Footer: React.FC = () => {
             <Image
               alt="CryoRepository Logo"
               className="mx-auto md:mx-0 w-10 h-10 invert dark:invert-0"
-              src="/logo.png"
+              src="/assets/logo.png"
               width={40}
               height={40}
             />
@@ -115,7 +98,7 @@ const Footer: React.FC = () => {
                 <Image
                   className="w-10 h-10 invert-0 dark:invert mx-auto md:mx-0 mt-8 md:mt-0"
                   alt="CryoDao Logo"
-                  src="/cryodao.svg"
+                  src="/assets/cryodao.svg"
                   width={40}
                   height={40}
                 />

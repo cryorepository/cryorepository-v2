@@ -451,7 +451,7 @@ export function SearchBox() {
           <div
             ref={dropdownRef}
             className={cn(
-              "absolute min-w-[420px] bg-background border border-input rounded-md shadow-lg p-1 z-50",
+              "absolute sm:min-w-[420px] min-w-[270px] bg-background border border-input rounded-md shadow-lg p-1 z-50",
               "max-h-60 overflow-y-auto",
               "flex flex-col",
               "animate-in fade-in-0 zoom-in-95",
@@ -483,7 +483,7 @@ export function SearchBox() {
                   }}
                 >
                   {result.name}
-                  <span className="text-xs text-muted-foreground font-semibold">
+                  <span className="text-xs text-muted-foreground font-semibold hidden sm:block">
                     {result.hash}
                   </span>
                 </Link>

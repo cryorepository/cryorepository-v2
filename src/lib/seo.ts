@@ -12,11 +12,12 @@ import { Metadata } from "next";
 // Default metadata values (merged with layout.tsx)
 const defaultMetadata = {
   description: "Explore our comprehensive database index at CryoRepository.",
-  imageUrl: "/ogp.png", // Consistent with seo.ts
+  imageUrl: "/assets/ogp.png", // Consistent with seo.ts
   baseUrl: "https://www.cryorepository.com",
   icons: {
-    icon: [{ url: "/favicon.png", type: "image/png" }],
+    icon: [{ url: "/assets/favicon.png", type: "image/png" }],
   },
+  manifest: '/manifest/manifest.json',
   keywords:
     "Cryopreservation, Cryorepository, Cryo Repository, Cryoprotectants, Preservation, Cryobiology, Cryogenic Storage, Cold Storage, Biopreservation, Cryopreservation Research, CryoDAO",
 };
@@ -98,14 +99,21 @@ export const searchMetadata: Metadata = createMetadata({
 export const databaseIndexMetadata: Metadata = createMetadata({
   title: "Database Index",
   canonical: "/database",
-  imageUrl: "/ogp.png",
+  imageUrl: "/assets/ogp.png",
+});
+
+// Static metadata for Reference Index page
+export const referenceIndexMetadata: Metadata = createMetadata({
+  title: "Reference Index",
+  canonical: "/database",
+  imageUrl: "/assets/ogp.png",
 });
 
 // Static metadata for Filters page
 export const filtersMetadata: Metadata = createMetadata({
   title: "Filter Entries",
   canonical: "/filter",
-  imageUrl: "/ogp.png",
+  imageUrl: "/assets/ogp.png",
 });
 
 // Dynamic metadata for Search Results page
@@ -120,7 +128,7 @@ export async function searchResultsMetadata({
     title: `${decodedToken} - Search Results`,
     description: `${decodedToken} | Search Results CryoRepository`,
     canonical: `/search/${route}`,
-    imageUrl: "/ogp.png",
+    imageUrl: "/assets/ogp.png",
   });
 };
 
@@ -142,6 +150,6 @@ export async function articleResultMetadata({
     canonical: `/database/${hash}`,
     imageUrl:
       image ||
-      "/ogp.png",
+      "/assets/ogp.png",
   });
 };

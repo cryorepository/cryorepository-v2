@@ -41,6 +41,9 @@ export function NavMenu() {
               <ListItem href="/database" title="Indexed Database">
                 View all our articles and filter through our database.
               </ListItem>
+              <ListItem href="/references" title="Reference Index">
+                Find and access articles through references.
+              </ListItem>
               {/*<ListItem href="/docs/installation" title="Installation">
                 How to install dependencies and structure your app.
               </ListItem>

@@ -42,7 +42,7 @@ export function MolecularWeight({
   };
   
   return (
-    <div className="flex items-center gap-2 whitespace-nowrap">
+    <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
         Molecular weight of
         <Input className="w-24" type="text" placeholder="10" value={molecularWeightMin} onChange={handleMinChange} />
         g/mol to

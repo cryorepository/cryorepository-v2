@@ -97,6 +97,7 @@ export function ChemClass({ chemClassFilters, chemicalClasses, setChemicalClasse
               <CommandGroup>
                 {mappedFilters.map((chemClass) => (
                   <CommandItem
+                    className="cursor-pointer"
                     key={chemClass.value}
                     //key={chemClass.label}
                     value={chemClass.value}

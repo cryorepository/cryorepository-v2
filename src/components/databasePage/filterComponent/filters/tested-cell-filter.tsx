@@ -189,7 +189,7 @@ export function CellComponent({
   }, [cellType]);
 
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <p>Tested on</p>
         {/*<Select value={cellType} onValueChange={setCellType}>
           <SelectTrigger className="cursor-pointer">
@@ -229,6 +229,7 @@ export function CellComponent({
               <CommandGroup>
                 {mappedFilters.map((item) => (
                   <CommandItem
+                    className="cursor-pointer"
                     key={item.value}
                     value={item.value}
                     onSelect={() => handleSelect(item.value)}

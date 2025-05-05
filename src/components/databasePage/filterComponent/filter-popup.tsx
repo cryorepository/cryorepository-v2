@@ -148,7 +148,7 @@ export function FilterPopup({chemClassFilters, cellTypeFilters}: FilterPopup) {
   return (
     <Accordion type="single" collapsible className="w-full px-4 mb-3 rounded-md text-sm font-medium border bg-background shadow-xs dark:hover:bg-accent dark:bg-input/30 dark:border-input dark:hover:bg-input/50">
         <AccordionItem value="item-1">
-            <AccordionTrigger>Filter Entries</AccordionTrigger>
+            <AccordionTrigger className="cursor-pointer">Filter Entries</AccordionTrigger>
             <AccordionContent className="border-t border-color pt-4 flex flex-col gap-4">
                 {filterError && (
                   <div>
@@ -195,7 +195,7 @@ export function FilterPopup({chemClassFilters, cellTypeFilters}: FilterPopup) {
                   setSuccessRateMax={setSuccessRateMax} 
                 />
 
-                <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center flex-wrap gap-2 mt-2">
                   <Button onClick={applyFilters} variant="outline" className="w-[170px]">
                     Apply Filters
                     <ArrowDownWideNarrow />

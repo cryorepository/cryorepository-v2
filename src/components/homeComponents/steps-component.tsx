@@ -85,7 +85,7 @@ const StepsComponent: React.FC<VestingStagesProps> = ({ stages = defaultStages, 
         </div>
 
         {/* Image Section */}
-        <div className="flexImg flex justify-center items-center w-2/5 max-h-[600px] mx-auto p-5 box-border">
+        <div className="flexImg flex justify-center items-center w-2/5 max-h-[600px] mx-auto sm:p-5 box-border">
           <img
             className="imageSci w-full max-h-[600px] h-auto object-contain"
             alt={image.alt}

@@ -1,17 +1,17 @@
 {
   "name": "CryoRepository",
   "short_name": "CryoRepo",
-  "description": "Open your eyes to the analytics of DeSci.",
+  "description": "Explore our comprehensive database index at CryoRepository.",
   "scope": "/",
   "icons": [
     {
-      "src": "/web-app-manifest-192x192.png",
+      "src": "/manifest/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/web-app-manifest-512x512.png",
+      "src": "/manifest/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

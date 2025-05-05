@@ -30,7 +30,7 @@ export default function Search() {
         </Button>
 
         <Button variant="ghost" className="flex justify-between hover:underline" asChild>
-          <Link href="/database" className="flex gap-2 hover:gap-4 transition pr-4 hover:pr-2">
+          <Link href="/references" className="flex gap-2 hover:gap-4 transition pr-4 hover:pr-2">
             Reference Index
             <ArrowBigRightDash />
           </Link>

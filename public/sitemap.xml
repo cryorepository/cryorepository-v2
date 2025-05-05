@@ -16,28 +16,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.cryorepository.com/enterprise</loc>
-    <lastmod>2024-12-15</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://www.cryorepository.com/report</loc>
-    <lastmod>2024-12-15</lastmod>
-    <priority>0.4</priority>
-  </url>
-  <url>
     <loc>https://www.cryorepository.com/search</loc>
     <lastmod>2024-12-15</lastmod>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.cryorepository.com/articles/cryopreservation-summary</loc>
-    <lastmod>2024-12-15</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.cryorepository.com/articles/reliability</loc>
-    <lastmod>2024-12-15</lastmod>
-    <priority>0.6</priority>
   </url>
 </urlset>
