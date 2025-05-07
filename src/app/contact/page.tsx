@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 
 import { contactMetadata } from "@/lib/seo"
-import Enterprise from "./import"
+import ContactPage from "@/components/contactComponents/contact-page";
 
 export const metadata: Metadata = contactMetadata;
 
-export default function Search() {
+export default function Contact() {
   return (
     <>
-
-      <Enterprise />
+      <ContactPage />
 
       <style>{`
         footer{

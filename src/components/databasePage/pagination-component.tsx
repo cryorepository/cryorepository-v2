@@ -11,28 +11,6 @@ import {
 } from "@/components/ui/pagination";
 
 // Define TypeScript interfaces
-/*interface Entry {
-  hash: string;
-  name: string;
-  overview: string;
-  structure_image?: string;
-}
-
-interface IndexResponse {
-  chemClassFilters: string[];
-  cellTypeFilters: string[];
-  entries: Entry[];
-  total: number;
-  page: number;
-  totalPages: number;
-}
-
-interface DatabaseClientProps {
-  initialData: IndexResponse;
-  page: number;
-  limit: number;
-}*/
-
 interface IndexResponse {
   total: number;
   page: number;

@@ -44,13 +44,6 @@ export async function POST(req: NextRequest) {
 
     const searchResults = await searchDB(sanitizedQuery);
 
-    /*const response: SearchResponse = {
-      message: 'Success',
-      results: searchResults
-        .filter(result => result.name) // Ensure name exists
-        .map(result => result.name!), // Extract name field
-    };*/
-
     const response: SearchResponse = {
       message: 'Success',
       results: searchResults

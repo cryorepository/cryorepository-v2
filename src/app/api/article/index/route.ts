@@ -24,7 +24,6 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1", 10);
-    //const limit = parseInt(searchParams.get("limit") || "10", 10);
     // If limit is not defined go to 36 articles, encode with base_10 then set max to 36 value cannot exceed 36
     const limit = Math.min(parseInt(searchParams.get("limit") || "36", 10), 36);
 

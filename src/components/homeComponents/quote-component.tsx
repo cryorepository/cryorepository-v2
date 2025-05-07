@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-//import Image from 'next/image';
 
 // Define TypeScript interface for the quote object
 interface Quote {
