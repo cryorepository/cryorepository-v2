@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import Image from "next/image"
 import { CheckCheck, Upload, MoveUpRight, ExternalLink } from 'lucide-react'
 
 import CitePopup from "@/components/articleComponents/cite-button"
@@ -273,10 +274,12 @@ export default async function ArticlePage({ params }: {params: Promise<ArticlePa
               <h5 className="text-sm">Powered By</h5>
               <h1 className="text-2xl font-bold">CryoDAO</h1>
             </div>
-            <img
+            <Image
               className="h-11 w-11 invert-0 dark:invert"
               alt="CryoDao Logo"
-              src="https://cdn.prod.website-files.com/643d6a447c6e1b4184d3ddfd/643d7ebba7e71c58cdb21f5a_CryoDAO-icon-black.svg"
+              src="/assets/cryodao.svg"
+              height={44}
+              width={44}
             />
           </div>
         </div>

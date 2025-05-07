@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 
 import QuoteSlider from "@/components/homeComponents/quote-component"
@@ -26,7 +27,7 @@ export default function GridContainer() {
         </div>
 
         <div className="w-full h-full">
-            <img className="w-full h-full object-cover md:[clip-path:polygon(10%_0,100%_0,100%_100%,0%_100%)]" src="/assets/landing.png" />
+            <Image className="w-full h-full object-cover md:[clip-path:polygon(10%_0,100%_0,100%_100%,0%_100%)]" src="/assets/landing.png"  height={1045} width={1045} alt="landing image" />
         </div>
       </div>
 
@@ -73,7 +74,7 @@ export default function GridContainer() {
 
         <div className="flex flex-col md:flex-row items-center max-w-[1100px] mx-auto">
           <div className="flex-1 p-8 flex justify-center">
-            <img src="/assets/mockup_laptop_v2.png" alt="Globe Poster" className="w-auto h-[250px] object-contain" />
+            <Image src="/assets/mockup_laptop_v2.png"  height={250} width={250} alt="Laptop Mockup" className="w-auto h-[250px] object-contain" />
           </div>
 
           <div className="flex-1 p-8">
@@ -119,10 +120,12 @@ export default function GridContainer() {
             </Button>
           </div>
 
-          <img 
+          <Image 
             className="h-16 mx-auto justify-self-start md:justify-self-end invert" 
-            src="https://cdn.prod.website-files.com/643d6a447c6e1b4184d3ddfd/643d7ebc9785f95503845be9_CryoDAO-black.svg"
+            src="/assets/cryodao.svg"
             alt="Sponsor Logo"
+            height={16}
+            width={16}
           />
         </div>
       </div>
@@ -163,7 +166,7 @@ export default function GridContainer() {
           </div>
 
           <div className="flex-1 p-8 flex justify-center md:justify-end">
-            <img src="https://www.profiler.bio/assets/globe-poster.png" alt="Globe Poster" className="w-auto h-[145px] object-contain" />
+            <Image src="/assets/globe_poster.png" alt="Globe Poster" height={145} width={145} className="w-auto h-[145px] object-contain" />
           </div>
         </div>
       </div>

@@ -44,12 +44,9 @@ export function NavMenu() {
               <ListItem href="/references" title="Reference Index">
                 Find and access articles through references.
               </ListItem>
-              {/*<ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
+              <ListItem href="/contact" title="Contact Us">
+                Get in touch with us for inquiries, feedback, or support.
               </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>*/}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>

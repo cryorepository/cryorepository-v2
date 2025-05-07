@@ -132,7 +132,7 @@ const CitePopup: React.FC<CitePopupProps> = ({ citationsData }) => {
           </DialogHeader>
           <div className="mt-4">
             <div className="border border-color rounded-md p-4 min-h-[110px] break-words">
-              <p>{citations[format]}</p>
+              <p className="break-all sm:break-keep">{citations[format]}</p>
             </div>
             <div className="flex items-center justify-between mt-4 flex-wrap">
               <div className="flex items-center gap-2">

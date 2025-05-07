@@ -116,6 +116,13 @@ export const filtersMetadata: Metadata = createMetadata({
   imageUrl: "/assets/ogp.png",
 });
 
+// Static metadata for Contact page
+export const contactMetadata: Metadata = createMetadata({
+  title: "Contact Us",
+  canonical: "/contact",
+  imageUrl: "/assets/ogp.png",
+});
+
 // Dynamic metadata for Search Results page
 export async function searchResultsMetadata({
   decodedToken,

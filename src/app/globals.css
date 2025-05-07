@@ -122,7 +122,7 @@
 }
 
 .top {
-  background-image: url(https://www.profiler.bio/assets/pattern-square.svg);
+  background-image: url(/assets/pattern_square.svg);
   background-position: top;
   mask-image: linear-gradient(0deg, transparent 10%, #000000 50%);
   -webkit-mask-image: linear-gradient(0deg, transparent 10%, #000000 50%);

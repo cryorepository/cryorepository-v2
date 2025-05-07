@@ -24,6 +24,13 @@ const Footer: React.FC = () => {
               >
                 Search
               </Link>
+              <Link
+                href="/contact"
+                aria-label="Reference Index"
+                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
+              >
+                Contact Us
+              </Link>
             </div>
           </div>
           <div className="flex flex-col items-center text-center py-2 md:py-0">
@@ -43,6 +50,13 @@ const Footer: React.FC = () => {
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
               >
                 Reference Index
+              </Link>
+              <Link
+                href="/database"
+                aria-label="Reference Index"
+                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white"
+              >
+                Filter Database
               </Link>
             </div>
           </div>
@@ -67,6 +81,16 @@ const Footer: React.FC = () => {
                 className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white flex items-center justify-center"
               >
                 CryoDAO
+                <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
+              </a>
+              <a
+                href="https://discord.gg/cryodao"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Our AI Agent"
+                className="text-muted-foreground text-sm py-1 md:py-0 hover:text-black dark:hover:text-white flex items-center justify-center"
+              >
+                CryoDAO Discord
                 <svg height="16" strokeLinejoin="round" viewBox="0 0 16 16" width="16"><path fillRule="evenodd" clipRule="evenodd" d="M6.75011 4H6.00011V5.5H6.75011H9.43945L5.46978 9.46967L4.93945 10L6.00011 11.0607L6.53044 10.5303L10.499 6.56182V9.25V10H11.999V9.25V5C11.999 4.44772 11.5512 4 10.999 4H6.75011Z" fill="currentColor"></path></svg>
               </a>
             </div>
