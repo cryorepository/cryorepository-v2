@@ -1,6 +1,14 @@
 // /lib/metadata.ts
 import { Metadata } from "next";
 
+/*
+ //paste this script into the browser console to get all the metadata tags
+[...document.head.querySelectorAll('meta')].map(meta => ({
+  name: meta.getAttribute('name') || meta.getAttribute('property'),
+  content: meta.getAttribute('content')
+}));
+*/
+
 // Default metadata values (merged with layout.tsx)
 const defaultMetadata = {
   description: "Explore our comprehensive database index at CryoRepository.",
