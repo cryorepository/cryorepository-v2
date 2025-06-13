@@ -69,7 +69,7 @@ export const homeMetadata: Metadata = createMetadata({
   title: "CryoRepository - Discover Cryopreservation CryoRepo",
   description: "Your source of information on cryoprotective agents.",
   canonical: "/",
-  imageUrl: "ogp.png",
+  imageUrl: "/assets/ogp.png",
 });
 
 // Static metadata for Not Found page
@@ -77,7 +77,7 @@ export const notFoundMetadata: Metadata = createMetadata({
   title: "Page Not Found (404)",
   description: "Your source of information on cryoprotective agents.",
   canonical: "/",
-  imageUrl: "ogp.png",
+  imageUrl: "/assets/ogp.png",
 });
 
 // Static metadata for Search page
@@ -85,7 +85,7 @@ export const searchMetadata: Metadata = createMetadata({
   title: "Search Our Database",
   description: "Your source of information on cryoprotective agents.",
   canonical: "/search",
-  imageUrl: "ogp.png",
+  imageUrl: "/assets/ogp.png",
 });
 
 // Static metadata for Database Index page
