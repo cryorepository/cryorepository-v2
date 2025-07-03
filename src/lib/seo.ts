@@ -45,8 +45,8 @@ function createMetadata({
       images: [
         {
           url: imageUrl,
-          width: 500,
-          height: 500,
+          width: 1200,
+          height: 630,
           alt: "CryoRepository preview image",
         },
       ],
