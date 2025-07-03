@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Metadata } from "next"
 
 import PaginationComponent from "@/components/databasePage/pagination-component"
-import { DatabaseBreadcrumb } from "@/components/databasePage/database-breadcrumb"
+// import { DatabaseBreadcrumb } from "@/components/databasePage/database-breadcrumb"
 import { FilterPopup } from "@/components/databasePage/filterComponent/filter-popup"
 
 import { databaseIndexMetadata } from "@/lib/seo"
@@ -43,7 +43,7 @@ export default async function IndexPage({ searchParams }: { searchParams: Promis
     return (
       <div className="mx-auto px-4 py-8 max-w-6xl min-h-[calc(100vh-128px)] flex flex-col justify-between">
         <div>
-        <DatabaseBreadcrumb />
+        {/*<DatabaseBreadcrumb />*/}
 
         <FilterPopup chemClassFilters={data.chemClassFilters} cellTypeFilters={data.cellTypeFilters} />
 

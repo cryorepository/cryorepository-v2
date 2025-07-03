@@ -90,7 +90,7 @@ export const searchMetadata: Metadata = createMetadata({
 
 // Static metadata for Database Index page
 export const databaseIndexMetadata: Metadata = createMetadata({
-  title: "Database Index",
+  title: "CPA Database",
   canonical: "/database",
   imageUrl: "/assets/ogp.png",
 });

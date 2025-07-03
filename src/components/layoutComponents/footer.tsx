@@ -1,4 +1,4 @@
-import Image from "next/image"
+/*import Image from "next/image"
 import React from "react"
 import Link from "next/link"
 
@@ -131,6 +131,82 @@ const Footer: React.FC = () => {
                 <p className="text-muted-foreground text-xs">
                   CRYOREPOSITORY is made possible by CRYODAO. This project is
                   funded by CRYODAO under a grant to advance cryopreservation
+                  research and education.
+                </p>
+              </div>
+            </div>
+            <p className="text-muted-foreground text-xs pt-5 md:pt-0">
+              © 2025 CRYOREPOSITORY ALL RIGHTS RESERVED
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;*/
+
+
+
+import Image from "next/image"
+import React from "react"
+//import Link from "next/link"
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="bg-background border-t border-border-color dark:shadow-xl mt-24 relative">
+      <div className="w-[80%] mx-auto">
+        <div className="mx-auto py-8 grid grid-cols-1 md:grid-cols-[60%_40%] md:max-w-[1005px] text-center md:text-left">
+          <div className="mb-8 md:mb-0">
+            <Image
+              alt="CryoRepository Logo"
+              className="mx-auto md:mx-0 w-10 h-10 invert dark:invert-0"
+              src="/assets/logo.png"
+              width={40}
+              height={40}
+            />
+            <p className="text-muted-foreground text-xs mt-4 max-w-[450px] md:pr-12 mx-auto md:mx-0">
+              Your go-to source for all things cryoprotectants. We&apos;re passionate
+              about providing researchers and scientists with the best information
+              and resources. Our mission is to support your work with comprehensive
+              and reliable data, fostering a community dedicated to advancing
+              cryopreservation. Join us on this journey to preserve the future!
+            </p>
+          </div>
+          <div className="flex flex-col justify-between">
+            <div className="flex flex-col gap-2.5 pb-8 md:pb-8">
+              <div>
+                <Image
+                  className="w-10 h-10 invert-0 dark:invert mx-auto md:mx-0 mt-8 md:mt-0"
+                  alt="CryoDao Logo"
+                  src="/assets/cryodao.svg"
+                  width={40}
+                  height={40}
+                />
+              </div>
+              <div className="w-fit">
+                <p className="text-muted-foreground text-xs">
+                  CRYOREPOSITORY is made possible by {" "}
+                  <a 
+                    href="https://cryodao.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    CRYODAO
+                  </a>
+                  . This project is
+                  funded by{" "}
+                  <a 
+                    href="https://cryodao.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    CRYODAO
+                  </a>
+                  {" "}under a grant to advance cryopreservation
                   research and education.
                 </p>
               </div>
