@@ -52,12 +52,12 @@ const Navbar: React.FC = () => {
           </Link>
         </Button>
 
-        <Button variant={"ghost"} asChild>
+        {/*<Button variant={"ghost"} asChild>
           <Link href="/about-us">
             About Us
           </Link>
         </Button>
-        {/*<NavMenu />*/}
+        <NavMenu />*/}
       </div>
 
       <div className="flex items-center select-none mr-5 gap-2">

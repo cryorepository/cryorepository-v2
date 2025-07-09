@@ -14,11 +14,12 @@ export default function Home() {
   );
 }*/
 
-import Link from "next/link"
+//import Link from "next/link"
 import type { Metadata } from "next"
+import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
-import { ArrowBigRightDash } from "lucide-react"
+//import { ArrowBigRightDash } from "lucide-react"
 import { SearchBox } from "@/components/searchComponents/search-box";
 import { searchMetadata } from "@/lib/seo"
 
@@ -37,6 +38,57 @@ export default function Search() {
 
       <SearchBox />
 
+      <div className="">
+        <div className="flex items-center gap-2 my-2">
+          <Button variant="outline" size="icon" aria-label="Discors Link" asChild>
+            <a
+              href="https://discord.gg/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image 
+                src="/assets/external/discord.svg" 
+                alt="Discord Logo"
+                className="[html.light_&]:brightness-0"
+                height={18} 
+                width={18} 
+              />
+            </a>
+          </Button>
+  
+          <Button variant="outline" size="icon" aria-label="Twitter Link" asChild>
+            <a
+              href="https://discord.gg/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image 
+                src="/assets/external/x.svg" 
+                alt="Twitter Logo" 
+                className="[html.light_&]:brightness-0"
+                height={14} 
+                width={14} 
+              />
+            </a>
+          </Button>
+
+          <p className="text-muted-foreground text-sm font-semibold">
+            View our socials
+          </p>
+        </div>
+
+        {/*<p className="text-sm max-w-[490px] text-gray-300">
+          CryoRepository is a resource dedicated to providing information regarding cryoprotective compounds. It curates detailed information on their chemical info, biological effects, usage in cryopreservation protocols, and performance across species and sample types. Our goal is to support research and innovation in cryobiology.
+        </p>*/}
+        <p className="text-sm max-w-[490px] text-gray-300 leading-relaxed">
+          <strong>CryoRepository</strong> is a resource focused on cryoprotective compounds.  
+          It offers curated data on their chemical properties, biological effects, and performance across species and sample types.  
+          <br /><br />
+          Designed to support cryopreservation research, CryoRepository aims to advance innovation in cryobiology.
+        </p>
+      </div>
+
+      {/*}
       <div className="flex flex-col w-full md:w-[170px] gap-1 mt-4 items-center">
         <Button variant="ghost" className="flex justify-between hover:underline" asChild>
           <Link href="/database" className="flex gap-2 hover:gap-4 transition pr-4 hover:pr-2">
@@ -58,6 +110,7 @@ export default function Search() {
           display: none;
         }
       `}</style>
+      */}
     </div>
   );
 }
