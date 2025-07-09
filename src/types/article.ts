@@ -1,4 +1,4 @@
-interface ArticleEntry {
+export interface ArticleEntry {
   name: string;
   hash: string;
   class: string;
