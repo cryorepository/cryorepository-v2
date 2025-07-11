@@ -1,7 +1,9 @@
 "use client"
 
 import React, { useState, useEffect, KeyboardEvent, useRef } from "react"
-import { AlignLeft, Brain, CornerDownRight, Search } from "lucide-react"
+import { useRouter } from "next/navigation"
+//import { AlignLeft, Brain, CornerDownRight, Filter, Search } from "lucide-react"
+import { Filter, Search } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -14,7 +16,7 @@ interface SearchResultItem {
 }
 
 export function SearchBox() {
-  const [textSearch, setTextSearch] = useState<boolean>(true)
+  //const [textSearch, setTextSearch] = useState<boolean>(true)
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [errorText, setErrorText] = useState<string>("")
   const [results, setResults] = useState<SearchResultItem[]>([])
@@ -24,6 +26,7 @@ export function SearchBox() {
   const [focusedIndex, setFocusedIndex] = useState<number>(-1) // Track focused result
   const inputRef = useRef<HTMLInputElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const router = useRouter();
 
   // Debounce logic
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<string>("")
@@ -81,7 +84,8 @@ export function SearchBox() {
 
   const handleSearchClick = () => {
     if (!searchTerm.trim()) {
-      setErrorText("Please enter a search term")
+      router.push('/database');
+      //setErrorText("Please enter a search term")
       return
     }
 
@@ -91,14 +95,16 @@ export function SearchBox() {
     }
 
     const encodedSearchTerm = encodeURIComponent(searchTerm)
-    window.location.href = textSearch
-      ? `/search/query=${encodedSearchTerm}`
-      : `/search/vector/query=${encodedSearchTerm}`
+    window.location.href = `/database/search/query=${encodedSearchTerm}`
+
+    /*window.location.href = textSearch
+      ? `/database/search/query=${encodedSearchTerm}`
+      : `/search/vector/query=${encodedSearchTerm}`*/
   }
 
-  const toggleSearch = () => {
+  /*const toggleSearch = () => {
     setTextSearch((prev) => !prev)
-  }
+  }*/
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && focusedIndex === -1) {
@@ -156,7 +162,7 @@ export function SearchBox() {
           ref={inputRef}
           type="text"
           id="searchInput"
-          placeholder="Search..."
+          placeholder="Name, Class..."
           className="w-full pr-18 pl-7"
           onKeyDown={handleKeyDown}
           onChange={handleInputChange}
@@ -213,7 +219,7 @@ export function SearchBox() {
         )}
 
         <div className="font-semibold absolute right-0 top-1/2 -translate-y-1/2 flex gap-2 items-center">
-          <Button
+          {/*<Button
             onClick={toggleSearch}
             className="h-7 w-7 font-semibold"
             variant="ghost"
@@ -221,13 +227,24 @@ export function SearchBox() {
             disabled
           >
             {textSearch ? <AlignLeft /> : <Brain />}
+          </Button>*/}
+
+          <Button
+            className="h-7 w-7 font-semibold"
+            variant="ghost"
+            size="icon"
+            disabled
+          >
+            <Filter />
           </Button>
 
           <Button
             onClick={handleSearchClick}
             className="bg-purple-600 hover:bg-purple-700 text-white font-semibold"
           >
-            <CornerDownRight />
+            {/*<CornerDownRight />*/}
+            Search
+            <Search />
           </Button>
         </div>
       </div>

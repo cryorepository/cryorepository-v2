@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
               about providing researchers and scientists with the best information
               and resources. Our mission is to support your work with comprehensive
               and reliable data, fostering a community dedicated to advancing
-              cryopreservation. Join us on this journey to preserve the future!
+              cryopreservation.
             </p>
           </div>
           <div className="flex flex-col justify-between">
@@ -212,7 +212,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
             <p className="text-muted-foreground text-xs pt-5 md:pt-0">
-              © 2025 CRYOREPOSITORY ALL RIGHTS RESERVED
+              © 2025 CRYODAO ALL RIGHTS RESERVED
             </p>
           </div>
         </div>

@@ -41,9 +41,9 @@ const Navbar: React.FC = () => {
       <div className="flex items-center gap-2">
         <Link aria-label="Home" href="/" className="flex items-center gap-1.5 ml-5 mr-4 h-10">
           <Image src="/assets/logo.png" width={28} height={28} className="select-none h-8 w-8 pointer-events-none [html.light_&]:brightness-0" alt="Logo Image" />
-          <h2 className="max-[400px]:hidden font-semibold text-xl">
+          {/*<h2 className="max-[400px]:hidden font-semibold text-xl">
             CryoRepository
-          </h2>
+          </h2>*/}
         </Link>
 
         <Button variant={"ghost"} asChild>
@@ -64,7 +64,7 @@ const Navbar: React.FC = () => {
         <ThemeTrigger />
 
 
-        <Button variant="outline" size="icon" aria-label="Discors Link" asChild>
+        {/*<Button variant="outline" size="icon" aria-label="Discors Link" asChild>
           <a
             href="https://discord.gg/"
             target="_blank"
@@ -94,7 +94,7 @@ const Navbar: React.FC = () => {
               width={14} 
             />
           </a>
-        </Button>
+        </Button>*/}
         {/*<SearchInput />*/}
       </div>
     </nav>
